@@ -17,14 +17,14 @@ class CreatePersonasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 45);
             $table->string('apellido', 45);
-            $table->integer('dni', 11);
+            $table->integer('dni');
             $table->date('fechaNacimiento');
             $table->string('direccion', 100);
 
-             //RELACION CON EL PUESTO DE TRABAJO
-             $table->unsignedBigInteger('organizacion_id');
-             $table->foreign('organizacion_id')->references('id')->on('organizaciones')
-                 ->onDelete('cascade')->onUpdate('cascade');
+            //RELACION CON LA ORGANIZACION
+            $table->unsignedBigInteger('organizacion_id');
+            $table->foreign('organizacion_id')->references('id')->on('organizaciones')
+                ->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
