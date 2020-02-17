@@ -35,6 +35,9 @@
     Route::get('getNivelPuesto/{id}' , [
         'uses' => 'NivelPuestoController@getNivelPuesto'
     ]);
+    Route::get('getNivelesPuestos' , [
+        'uses' => 'NivelPuestoController@getNivelesPuestos'
+    ]);
 
     //GRUPO DE RUTAS PARA CRUD PERSONAS
     Route::resource('personas', 'PersonaController');

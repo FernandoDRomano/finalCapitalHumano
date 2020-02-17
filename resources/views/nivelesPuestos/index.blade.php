@@ -46,7 +46,7 @@
 
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Niveles Departamentales</span></strong></h3>
+      <h3 class="card-title"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Niveles de Puestos</span></strong></h3>
       <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
@@ -75,7 +75,7 @@
           </tr>
         </thead>
         <tbody id="tabla">
-        @foreach ($nivelesDepartamentales as $nivel)
+        @foreach ($nivelesPuestos as $nivel)
             <tr>
                 <td>{{$nivel->id}}</td>
                 <td>{{$nivel->jerarquia . ' - ' . $nivel->nombre}}</td>
@@ -88,7 +88,7 @@
         </tbody>
       </table>
 
-      {{ $nivelesDepartamentales->links() }}
+      {{ $nivelesPuestos->links() }}
 
     </div>
     <!-- /.card-body -->
@@ -107,12 +107,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title w-100 text-center" id="exampleModalLabel">Nuevo Nivel Departamental</h5>
+                <h5 class="modal-title w-100 text-center" id="exampleModalLabel">Nuevo Nivel de Puesto</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="formAgregar" action="{{ action('NivelDepartamentoController@store') }}" method="POST">
+            <form id="formAgregar" action="{{ action('NivelPuestoController@store') }}" method="POST">
                 {{ csrf_field() }}
                 <div class="modal-body">
                         <div class="card-body">
@@ -161,7 +161,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title w-100 text-white text-center" id="exampleModalLabel">Editar Nivel Departamental</h5>
+                <h5 class="modal-title w-100 text-white text-center" id="exampleModalLabel">Editar Nivel de Puesto</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -319,7 +319,7 @@
         if (e.target.classList.contains('editar') || e.target.classList.contains('fa-edit')) {
             //CONSTRUYO LA URL
             const id = e.target.getAttribute('data-id');
-            const url = `getNivelDepartamental/${id}`;
+            const url = `getNivelPuesto/${id}`;
             //LLAMADA A FETCH
             fetch(url, {
                 headers: {
@@ -344,7 +344,7 @@
                 let jerarquia = datos.jerarquia;
                 getJerarquias(jerarquia);
 
-                formEditar.setAttribute('action', 'nivelesDepartamentales/' + datos.id)
+                formEditar.setAttribute('action', 'nivelesPuestos/' + datos.id)
             })
             .catch(error => {
                 console.log(error);
@@ -359,7 +359,7 @@
             console.log("Click btn eliminar");
             //CONSTRUYO LA URL
             const id = e.target.getAttribute('data-id');
-            const url = `getNivelDepartamental/${id}`;
+            const url = `getNivelPuesto/${id}`;
             //LLAMADA A FETCH
             fetch(url, {
                 headers: {
@@ -382,9 +382,9 @@
                 titulo.innerHTML = `<strong>Eliminar ${datos.nombre}</strong>`;
 
                 const contenido = document.getElementById('contenidoModalEliminar');
-                contenido.innerHTML = `<h4 class="text-center">¿Estas seguro de Eliminar al Nivel Departamental <strong>${datos.nombre}</strong>?</h4>`;
+                contenido.innerHTML = `<h4 class="text-center">¿Estas seguro de Eliminar al Nivel de Puesto <strong>${datos.nombre}</strong>?</h4>`;
 
-                formEliminar.setAttribute('action', 'nivelesDepartamentales/' + datos.id);
+                formEliminar.setAttribute('action', 'nivelesPuestos/' + datos.id);
             })
             .catch(error => {
                 console.log(error);
@@ -394,7 +394,7 @@
    }
 
    function getJerarquias(seleccionado = 0){
-        let url = "getNivelesDepartamentales";
+        let url = "getNivelesPuestos";
             //LLAMADA A FETCH
             fetch(url, {
                 headers: {

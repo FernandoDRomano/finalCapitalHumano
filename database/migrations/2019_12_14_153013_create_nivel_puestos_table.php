@@ -15,6 +15,7 @@ class CreateNivelPuestosTable extends Migration
     {
         Schema::create('nivel_puestos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('jerarquia', 45);
             $table->string('nombre', 45);
             $table->timestamps();
         });
