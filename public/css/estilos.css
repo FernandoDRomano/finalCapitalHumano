@@ -1,0 +1,5 @@
+/* Selecciona cualquier <input> deshabilitado */
+.disabled {
+    background: #b1b7c1;
+    color: white;
+  }
