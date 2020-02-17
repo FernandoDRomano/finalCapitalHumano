@@ -23,8 +23,11 @@
 
     //GRUPO DE RUTAS PARA CRUD NIVELES DEPARTAMENTALES
     Route::resource('nivelesDepartamentales', 'NivelDepartamentoController');
-    Route::get('getNivelDepartamental{id}' , [
+    Route::get('getNivelDepartamental/{id}' , [
         'uses' => 'NivelDepartamentoController@getNivelDepartamental'
+    ]);
+    Route::get('getNivelesDepartamentales' , [
+        'uses' => 'NivelDepartamentoController@getNivelesDepartamentales'
     ]);
 
     //GRUPO DE RUTAS PARA CRUD NIVELES PUESTOS

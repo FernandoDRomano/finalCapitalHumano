@@ -15,6 +15,7 @@ class CreateNivelDepartamentosTable extends Migration
     {
         Schema::create('nivel_departamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('jerarquia', 45);
             $table->string('nombre', 45);
             $table->timestamps();
         });

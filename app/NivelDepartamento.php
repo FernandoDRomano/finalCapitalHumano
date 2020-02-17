@@ -9,7 +9,7 @@ class NivelDepartamento extends Model
     //TABLA DE LA BD
     protected $table = 'nivel_departamentos';
     //ATRIBUTOS A SER MODIFICADOS
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'jerarquia'];
 
     /*
      *

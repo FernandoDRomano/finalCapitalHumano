@@ -15,6 +15,30 @@
     </a>
 </li>
 
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-sitemap"></i>
+      <p>
+        Niveles
+        <i class="right fas fa-angle-left"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview">
+      <li class="nav-item">
+        <a href="{{url('nivelesDepartamentales')}}" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Nivel de Departamentos</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{url('nivelesPuestos')}}" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Nivel de Puestos</p>
+        </a>
+      </li>
+    </ul>
+  </li>
+
 @endsection
 
 @section('contenido')
