@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Bootstrap DatePicker -->
+  <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
+  <!-- Estilos Propios -->
   <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
   @yield('head')
 
@@ -42,7 +45,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{url('/')}}" class="brand-link">
-      <img src="img/logo.png"
+      <img src="{{asset('img/logo.png')}}"
            alt="Logo"
            class="brand-image img-circle my-1"
            style="opacity: .9">
@@ -116,6 +119,8 @@
 <script src="{{ asset('js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
+<!-- Bootstrap DatePicker -->
+<script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 
 @include('sweetalert::alert')
 

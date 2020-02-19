@@ -82,7 +82,7 @@
                 <td>
                     <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$organizacion->id}}"><i class="fas fa-edit" data-id="{{$organizacion->id}}"></i></a>
                     <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$organizacion->id}}"><i class="fas fa-trash-alt" data-id="{{$organizacion->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="#" role="button"><i class="fas fa-info-circle"></i></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{action('OrganizacionController@show', $organizacion->id)}}" role="button"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach

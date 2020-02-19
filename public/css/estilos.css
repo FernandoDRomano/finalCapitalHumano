@@ -2,4 +2,12 @@
 .disabled {
     background: #b1b7c1;
     color: white;
-  }
+}
+
+.error-input{
+    border-color: red;
+}
+
+.correcto-input{
+    border-color: green;
+}

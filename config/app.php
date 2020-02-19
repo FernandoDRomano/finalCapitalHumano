@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'date_format_js' => 'dd-mm-yy',
+    'date_format' => 'd-m-Y',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -53,7 +53,8 @@ class OrganizacionController extends Controller
 
     public function show($id)
     {
-
+        $organizacion = Organizacion::findOrFail($id);
+        return view('organizaciones.show')->with('organizacion', $organizacion);
     }
 
 
