@@ -40,8 +40,8 @@
     ]);
 
     //GRUPO DE RUTAS PARA CRUD PERSONAS
-    Route::resource('personas', 'PersonaController');
-    Route::get('getPersona/{id}' , [
+    Route::resource('organizacion/{id}/personas', 'PersonaController');
+    Route::get('organizacion/{organizacion}/getPersona/{id}' , [
         'uses' => 'PersonaController@getPersona'
     ]);
 
