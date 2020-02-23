@@ -17,6 +17,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Bootstrap DatePicker -->
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
+  <!-- OrgChart -->
+  <link rel="stylesheet" href="{{ asset('plugins/OrgChart/css/jquery.orgchart.min.css') }}">
   <!-- Estilos Propios -->
   <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
   @yield('head')
@@ -121,6 +123,8 @@
 <script src="{{ asset('js/demo.js') }}"></script>
 <!-- Bootstrap DatePicker -->
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- OrgChart -->
+<script src=" {{ asset('plugins/OrgChart/js/jquery.orgchart.min.js') }} "></script>
 
 @include('sweetalert::alert')
 

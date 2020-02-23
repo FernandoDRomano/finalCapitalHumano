@@ -33,8 +33,12 @@ class Departamento extends Model
     }
 
     //RELACION CON LOS DEPARTAMENTOS QUE TIENE A SU CARGO
-    public function dependeDepartamentos(){
-        return $this->hasMany(Departamento::class);
+    public function departamentos(){
+        return $this->hasMany(Departamento::class, 'depende_departamento_id');
+    }
+
+    public function dependeDepartamento(){
+        return $this->belongsTo(Departamento::class);
     }
 
     //PARA EL BUSCADOR USARE UN SCOPE

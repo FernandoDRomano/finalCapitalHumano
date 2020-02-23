@@ -28,7 +28,7 @@ class CreateDepartamentosTable extends Migration
                 ->onDelete('cascade')->onUpdate('cascade');
 
             //RELACION DE DEPENDENCIA DE LOS DEPARTAMENTOS (PARA SABER QUE DEPARTAMENTO DEPENDE DE OTRO)
-            $table->unsignedBigInteger('depende_departamento_id');
+            $table->unsignedBigInteger('depende_departamento_id')->nullable();
             $table->foreign('depende_departamento_id')->references('id')->on('departamentos')
                 ->onDelete('cascade')->onUpdate('cascade');
 
