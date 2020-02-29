@@ -22,4 +22,9 @@ class Obligacion extends Model
         return $this->belongsTo(PuestoDeTrabajo::class);
     }
 
+    //PARA EL BUSCADOR USARE UN SCOPE
+    public function scopeSearch($query, $buscar){
+        return $query->where('nombre', 'LIKE' , '%'. $buscar . '%');
+    }
+
 }
