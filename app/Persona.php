@@ -20,7 +20,7 @@ class Persona extends Model
 
     //RELACION CON LOS PUESTOS DE TRABAJO
     public function puestosDeTrabajos(){
-        return $this->belongsToMany(PuestoDeTrabajo::class);
+        return $this->belongsToMany(PuestoDeTrabajo::class, 'persona_puesto_trabajo');
     }
 
     //RELACION CON LA ORGANIZACION

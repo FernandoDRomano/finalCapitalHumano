@@ -28,7 +28,7 @@ class Departamento extends Model
     }
 
     //RELACION CON LOS PUESTOS DE TRABAJO
-    public function puestosDeTrabajos(){
+    public function puestos(){
         return $this->hasMany(PuestoDeTrabajo::class);
     }
 
@@ -39,6 +39,10 @@ class Departamento extends Model
 
     public function dependeDepartamento(){
         return $this->belongsTo(Departamento::class);
+    }
+
+    public function personas(){
+        return $this->hasManyThrough(Persona::class, PuestoDeTrabajo::class);
     }
 
     //PARA EL BUSCADOR USARE UN SCOPE

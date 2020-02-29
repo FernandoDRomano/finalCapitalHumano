@@ -27,10 +27,16 @@ class Organizacion extends Model
         return $this->hasMany(Persona::class);
     }
 
+    //PARA ACCEDER A LOS PUESTOS DE TRABAJOS A TRAVES DE LOS DEPATAMENTOS
+    public function puestosDeTrabajos(){
+        return $this->hasManyThrough(PuestoDeTrabajo::class, Departamento::class);
+    }
+
     //PARA EL BUSCADOR USARE UN SCOPE
     public function scopeSearch($query, $buscar){
         return $query->where('nombre', 'LIKE' , '%'. $buscar . '%')
             ->orwhere('id' , $buscar);
     }
+
 
 }

@@ -7,7 +7,7 @@
 @section('menu')
 
 <li class="nav-item">
-    <a href="{{url('organizaciones')}}" class="nav-link">
+    <a href="{{url('organizaciones')}}" class="nav-link text-white">
         <i class="nav-icon fas fa-building"></i>
         <p>
           Organizaciones
@@ -16,8 +16,8 @@
 </li>
 
 <li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-sitemap"></i>
+    <a href="#" class="nav-link text-white">
+        <i class="fas fa-layer-group nav-icon"></i>
       <p>
         Niveles
         <i class="right fas fa-angle-left"></i>
@@ -25,19 +25,19 @@
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="{{url('nivelesDepartamentales')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
+        <a href="{{url('nivelesDepartamentales')}}" class="nav-link text-white">
+            <i class="fas fa-boxes nav-icon"></i>
           <p>Nivel de Departamentos</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{url('nivelesPuestos')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Nivel de Puestos</p>
+        <a href="{{url('nivelesPuestos')}}" class="nav-link text-white">
+            <i class="fas fa-sort-amount-up-alt nav-icon"></i>
+            <p>Nivel de Puestos</p>
         </a>
       </li>
     </ul>
-  </li>
+</li>
 
 @endsection
 
@@ -45,8 +45,8 @@
 
 
 <div class="card">
-    <div class="card-header">
-      <h3 class="card-title"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Niveles de Puestos</span></strong></h3>
+    <div class="card-header blue-marino d-flex justify-content-between align-items-center">
+      <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Niveles de Puestos</span></strong></h3>
       <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
@@ -54,7 +54,7 @@
     <!-- /.card-header -->
     <div class="card-body table-responsive ">
 
-        <div class="form-group row my-3 px-3">
+        <div class="form-group row mb-3 px-3">
             <div class="col-md-6">
                 <form method="get" action="#">
                     <div class="input-group">
@@ -66,15 +66,15 @@
         </div>
 
 
-      <table class="table table-hover text-nowrap px-3">
-        <thead>
+    <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+        <thead class="thead-dark text-uppercase">
           <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Opciones</th>
           </tr>
         </thead>
-        <tbody id="tabla">
+        <tbody id="tabla" class="bg-white">
         @foreach ($nivelesPuestos as $nivel)
             <tr>
                 <td>{{$nivel->id}}</td>
@@ -229,7 +229,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger text-white">Eliminar</button>
+                    <button id="bntEliminarModal" type="submit" class="btn btn-danger text-white">Eliminar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
@@ -244,6 +244,19 @@
 @section('script')
 
 <script>
+
+    /*
+        LIMPIAR MODAL AL CERRAR
+    */
+    $("#modalEliminar").on("hidden.bs.modal", function () {
+        const contenido = document.getElementById('contenidoModalEliminar');
+        const titulo = document.getElementById('tituloModalEliminar');
+
+        contenido.textContent = "";
+        titulo.textContent = "";
+
+    });
+
     //Variables
     const token = document.querySelector("meta[name='csrf-token']").getAttribute('content');
     const formAgregar = document.getElementById('formAgregar');
@@ -377,20 +390,73 @@
             })
             .then(datos => {
                 console.log(datos);
-                //Cargo en el modal los datos
-                const titulo = document.getElementById('tituloModalEliminar');
-                titulo.innerHTML = `<strong>Eliminar ${datos.nombre}</strong>`;
-
-                const contenido = document.getElementById('contenidoModalEliminar');
-                contenido.innerHTML = `<h4 class="text-center">¿Estas seguro de Eliminar al Nivel de Puesto <strong>${datos.nombre}</strong>?</h4>`;
-
-                formEliminar.setAttribute('action', 'nivelesPuestos/' + datos.id);
+                pintarModal(datos.id, datos);
             })
             .catch(error => {
                 console.log(error);
             });
 
         }
+   }
+
+   function pintarModal(id, nivel){
+
+            const url = `getPuestosDependientes/${id}`;
+            //LLAMADA A FETCH
+            fetch(url, {
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+                method: 'get',
+                credentials: "same-origin",
+            })
+            .then(response =>{
+                console.log(response);
+                return response.json();
+            })
+            .then(datos => {
+
+                console.log(datos);
+                const btnEliminar = document.getElementById('bntEliminarModal');
+
+                //Cargo en el modal los datos
+                if(datos.puestos.length > 0){
+                    const contenido = document.getElementById('contenidoModalEliminar');
+                    const titulo = document.getElementById('tituloModalEliminar');
+                    titulo.innerHTML = `<strong>Error</strong>`;
+
+                    let template = `<h4 class="text-center text-danger">Error: No se podra eliminar este Nivel,
+                    debido a que esta siendo utilizado por
+                    <Strong>
+                    ${datos.puestos.length == 1 ? datos.puestos.length + ' puesto de trabajo' : datos.puestos.length + ' puestos de trabajos'}</strong></h4>`;
+
+                    btnEliminar.style.display = 'none';
+
+                    contenido.innerHTML = template;
+
+                }else{
+                    //Cargo en el modal los datos
+                    const titulo = document.getElementById('tituloModalEliminar');
+                    titulo.innerHTML = `<strong>Eliminar ${nivel.nombre}</strong>`;
+
+                    const contenido = document.getElementById('contenidoModalEliminar');
+                    contenido.innerHTML = `<h4 class="text-center">¿Estas seguro de Eliminar al Nivel de Puesto <strong>${nivel.nombre}</strong>?</h4>`;
+
+                    formEliminar.setAttribute('action', 'nivelesPuestos/' + nivel.id);
+
+                    btnEliminar.style.display = 'block';
+                }
+
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
    }
 
    function getJerarquias(seleccionado = 0){

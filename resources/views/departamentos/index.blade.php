@@ -6,59 +6,7 @@
 
 @section('menu')
 
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>
-        Gestión
-        <i class="right fas fa-angle-left"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview">
-      <li class="nav-item">
-        <a href="{{route('organizaciones.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Organizaciones</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{route('personas.index', ['id' => $organizacion->id])}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Personas</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{route('departamentos.index', ['id' => $organizacion->id])}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Departamentos</p>
-        </a>
-      </li>
-    </ul>
-</li>
-
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-sitemap"></i>
-      <p>
-        Niveles
-        <i class="right fas fa-angle-left"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview">
-      <li class="nav-item">
-        <a href="{{url('nivelesDepartamentales')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Nivel de Departamentos</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{url('nivelesPuestos')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Nivel de Puestos</p>
-        </a>
-      </li>
-    </ul>
-</li>
+@include('template.menu')
 
 @endsection
 
@@ -67,16 +15,16 @@
 <h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
 <div class="card">
-    <div class="card-header">
-      <h3 class="card-title"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Departamentos</span></strong></h3>
+    <div class="card-header blue-marino d-flex justify-content-between align-items-center">
+      <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Departamentos ({{$organizacion->departamentos->count()}})</span></strong></h3>
       <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
     </div>
     <!-- /.card-header -->
-    <div class="card-body table-responsive ">
+    <div class="card-body table-responsive">
 
-        <div class="form-group row my-3 px-3">
+        <div class="form-group row mb-3 px-3">
             <div class="col-md-6">
                 <form method="get" action="#">
                     <div class="input-group">
@@ -88,13 +36,14 @@
         </div>
 
 
-      <table class="table table-hover text-nowrap px-3">
-        <thead>
+      <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+        <thead class="thead-dark text-uppercase">
           <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Nivel</th>
             <th>Depende de</th>
+            <th>Puestos de Trabajos</th>
             <th>Opciones</th>
           </tr>
         </thead>
@@ -105,6 +54,7 @@
                 <td>{{$departamento->nombre}}</td>
                 <td>{{$departamento->nivelDepartamento->nombre}}</td>
                 <td>{{isset($departamento->dependeDepartamento['nombre']) ? $departamento->dependeDepartamento['nombre'] : "No Asignado"}}</td>
+                <td>{{$departamento->puestos->count()}}</td>
                 <td>
                     <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$departamento->id}}"><i class="fas fa-edit" data-id="{{$departamento->id}}"></i></a>
                     <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$departamento->id}}"><i class="fas fa-trash-alt" data-id="{{$departamento->id}}"></i></a>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Departamento;
 use Illuminate\Http\Request;
 use App\Persona;
 use App\Http\Requests\SavePersonaRequest;
 use App\Organizacion;
+use App\PuestoDeTrabajo;
 use RealRashid\SweetAlert\Facades\Alert;
 use DateTime;
 
@@ -28,9 +30,25 @@ class PersonaController extends Controller
     }
 
 
-    public function create()
+    public function show(Request $request, $organizacion_id, $persona_id)
     {
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+        $departamentos = $organizacion->departamentos;
+        $persona = Persona::findOrFail($persona_id);
+        //$puestosDeTrabajos = $persona->puestosDeTrabajos()->orderBy('id', 'ASC')->paginate(10);
 
+        if ($request->buscar == null) {
+            $puestosDeTrabajos = $persona->puestosDeTrabajos()->orderBy('id', 'ASC')->paginate(10);
+        }else{
+            $puestosDeTrabajos = $persona->puestosDeTrabajos()->search($request->buscar)->orderBy('id', 'ASC')->paginate(10);
+        }
+
+        return view('personas.show')->with([
+            'organizacion' => $organizacion,
+            'departamentos' => $departamentos,
+            'persona' => $persona,
+            'puestosDeTrabajos' => $puestosDeTrabajos
+        ]);
     }
 
 
@@ -57,16 +75,21 @@ class PersonaController extends Controller
     }
 
 
-    public function show($id)
+    public function storeDesdePuestoDeTrabajo(Request $request, $organizacion_id)
     {
-        //
+        //Busco el puesto
+        $puesto = PuestoDeTrabajo::findOrFail($request->selectPuestoDeTrabajo);
+        //Asigno las personas
+        $puesto->personas()->attach($request->selectPersona);
+
+        $mensaje = "Las Personas fueron asignadas correctamente al Puesto de Trabajo.";
+        Alert::success('Asignaciones Registradas!', $mensaje);
+        //flash('¡Se ha Registrado la Organización <strong>' . $organizacion->nombre . '</strong> de Forma Exitosa!')->success()->important();
+        return redirect()->route('puestosDeTrabajos.show', [$organizacion_id, $puesto->id]);
+
     }
 
 
-    public function edit($id)
-    {
-
-    }
 
 
     public function update(Request $request, $organizacion_id, $persona_id)
@@ -105,6 +128,21 @@ class PersonaController extends Controller
         Alert::warning('Persona Eliminada!', $mensaje);
         //Redireccionamos
         return redirect()->route('personas.index', $organizacion_id);
+    }
+
+    public function destroyDesdePuestoDeTrabajo(Request $request, $organizacion_id, $persona_id){
+        //Busco el puesto de trabajo que viene por el request
+        $puesto = PuestoDeTrabajo::findOrFail($request->puestoDeTrabajo_id);
+        $persona = Persona::findOrFail($persona_id);
+
+        $mensaje = $persona->apellido . ', ' . $persona->nombre . " ya no tiene asignado el puesto de trabajo " . $puesto->nombre;
+
+        //Elimino la persona del puesto de trabajo
+        $puesto->personas()->detach($persona_id);
+        //Retorno a la vista
+        Alert::warning('Asignación Eliminada!', $mensaje);
+        //Redireccionamos
+        return redirect()->route('puestosDeTrabajos.show', [$organizacion_id, $puesto->id]);
     }
 
     //Estoy recibiendo dos parametros por la URI, ver rutas

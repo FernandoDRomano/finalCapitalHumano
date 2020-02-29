@@ -32,20 +32,24 @@ class PuestoDeTrabajo extends Model
         return $this->hasMany(Obligacion::class);
     }
 
-    //RELACION CON LAS OBLIGACIONES
+    //RELACION CON LAS FUNCIONES
     public function funciones(){
         return $this->hasMany(Funcion::class);
     }
 
     //RELACION CON LAS PERSONAS (N a M)
     public function personas(){
-        return $this->belongsToMany(Persona::class);
+        return $this->belongsToMany(Persona::class, 'persona_puesto_trabajo');
+    }
+
+    //RELACION CON LA ORGANIZACION A TRAVES DEL DEPARTAMENTO
+    public function organizacion(){
+        return $this->hasOneThrough(Organizacion::class, Departamento::class);
     }
 
     //PARA EL BUSCADOR USARE UN SCOPE
     public function scopeSearch($query, $buscar){
-        return $query->where('nombre', 'LIKE' , '%'. $buscar . '%')
-            ->orwhere('id' , $buscar);
+        return $query->where('nombre', 'LIKE' , '%'. $buscar . '%');
     }
 
 }

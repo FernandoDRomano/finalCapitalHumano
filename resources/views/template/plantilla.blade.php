@@ -19,24 +19,27 @@
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
   <!-- OrgChart -->
   <link rel="stylesheet" href="{{ asset('plugins/OrgChart/css/jquery.orgchart.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <!-- Estilos Propios -->
   <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
   @yield('head')
 
 </head>
+
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
     <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark">
+  <nav class="main-header navbar navbar-expand navbar-dark blue-oscuro">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block text-white">
-      <a href="{{url('/')}}" class="nav-link">Final | Gestión del capital humano</a>
+        <a href="{{url('/')}}" class="nav-link text-white">Final | Gestión del capital humano</a>
       </li>
     </ul>
 
@@ -44,14 +47,14 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4 blue">
     <!-- Brand Logo -->
-    <a href="{{url('/')}}" class="brand-link">
+    <a href="{{url('/')}}" class="brand-link blue-oscuro">
       <img src="{{asset('img/logo.png')}}"
            alt="Logo"
            class="brand-image img-circle my-1"
            style="opacity: .9">
-      <span class="brand-text font-weight-light">Dashboard</span>
+      <span class="brand-text font-weight-normal text-white">Dashboard</span>
     </a>
 
     <!-- Sidebar -->
@@ -125,6 +128,9 @@
 <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- OrgChart -->
 <script src=" {{ asset('plugins/OrgChart/js/jquery.orgchart.min.js') }} "></script>
+<!-- Select2 -->
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/select2/js/i18n/es.js') }}"></script>
 
 @include('sweetalert::alert')
 

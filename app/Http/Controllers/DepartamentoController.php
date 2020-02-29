@@ -8,6 +8,7 @@ use App\NivelDepartamento;
 use App\Organizacion;
 use App\Http\Requests\SaveDepartamentoRequest;
 use App\Http\Controllers\OrganizacionController;
+use App\NivelPuesto;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartamentoController extends Controller
@@ -58,9 +59,25 @@ class DepartamentoController extends Controller
     }
 
 
-    public function show($organizacion_id, $departamento_id)
+    public function show(Request $request, $organizacion_id, $departamento_id)
     {
-        dd($departamento_id);
+
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+        $departamento = Departamento::findOrFail($departamento_id);
+        $niveles= NivelPuesto::orderBy('jerarquia', 'ASC')->get();
+
+        if($request->buscar == null){
+            $puestosDeTrabajos = $departamento->puestos()->orderBy('id', 'ASC')->paginate(10);
+        }else{
+            $puestosDeTrabajos = $departamento->puestos()->search($request->buscar)->orderBy('id', 'ASC')->paginate(10);
+        }
+
+        return view('departamentos.show')->with([
+            'organizacion' => $organizacion,
+            'departamento' => $departamento,
+            'puestosDeTrabajos' => $puestosDeTrabajos,
+            'niveles' => $niveles,
+            ]);
     }
 
 

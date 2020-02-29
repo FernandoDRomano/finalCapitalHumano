@@ -7,7 +7,7 @@
 @section('menu')
 
 <li class="nav-item">
-    <a href="{{url('organizaciones')}}" class="nav-link">
+    <a href="{{url('organizaciones')}}" class="nav-link text-white">
         <i class="nav-icon fas fa-building"></i>
         <p>
           Organizaciones
@@ -16,8 +16,8 @@
 </li>
 
 <li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-sitemap"></i>
+    <a href="#" class="nav-link text-white">
+        <i class="fas fa-layer-group nav-icon"></i>
       <p>
         Niveles
         <i class="right fas fa-angle-left"></i>
@@ -25,19 +25,19 @@
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="{{url('nivelesDepartamentales')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
+        <a href="{{url('nivelesDepartamentales')}}" class="nav-link text-white">
+            <i class="fas fa-boxes nav-icon"></i>
           <p>Nivel de Departamentos</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{url('nivelesPuestos')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Nivel de Puestos</p>
+        <a href="{{url('nivelesPuestos')}}" class="nav-link text-white">
+            <i class="fas fa-sort-amount-up-alt nav-icon"></i>
+            <p>Nivel de Puestos</p>
         </a>
       </li>
     </ul>
-  </li>
+</li>
 
 @endsection
 
@@ -45,16 +45,16 @@
 
 
 <div class="card">
-    <div class="card-header">
-      <h3 class="card-title"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Organizaciones</span></strong></h3>
-      <a type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
-        <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
-    </a>
+    <div class="card-header blue-marino d-flex justify-content-between align-items-center">
+        <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Organizaciones</span> </strong> </h3>
+        <a type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+            <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
+        </a>
     </div>
     <!-- /.card-header -->
     <div class="card-body table-responsive ">
 
-        <div class="form-group row my-3 px-3">
+        <div class="form-group row mb-3 px-3">
             <div class="col-md-6">
                 <form method="get" action="#">
                     <div class="input-group">
@@ -66,15 +66,15 @@
         </div>
 
 
-      <table class="table table-hover text-nowrap px-3">
-        <thead>
+      <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+        <thead class="thead-dark text-uppercase">
           <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Opciones</th>
           </tr>
         </thead>
-        <tbody id="tabla">
+        <tbody id="tabla" class="bg-white">
         @foreach ($organizaciones as $organizacion)
             <tr>
                 <td>{{$organizacion->id}}</td>
@@ -181,8 +181,8 @@
             {{csrf_field()}}
             {{method_field('delete')}}
                 <div class="modal-body">
-                    <div id="contenidoModalEliminar" class="card-body">
-                    </div>
+                    <div id="contenidoModalEliminar" class="card-body mb-0 pb-0"></div>
+                    <div id="contenidoModalEliminar2" class="card-body"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger text-white">Eliminar</button>
@@ -318,6 +318,7 @@
             })
             .then(datos => {
                 console.log(datos);
+                getDatosDependientes(id);
                 //Cargo en el modal los datos
                 const titulo = document.getElementById('tituloModalEliminar');
                 titulo.innerHTML = `<strong>Eliminar ${datos.nombre}</strong>`;
@@ -332,6 +333,138 @@
             });
 
         }
+   }
+
+   function getDatosDependientes(id){
+        //PRIMERO VERIFICO QUE SE HAGA CLICK EN EL BOTON DE EDITAR
+        //CONSTRUYO LA URL
+            const url = `getDatosDependientes/${id}`;
+            //LLAMADA A FETCH
+            fetch(url, {
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+                method: 'get',
+                credentials: "same-origin",
+            })
+            .then(response =>{
+                console.log(response);
+                return response.json();
+            })
+            .then(datos => {
+                console.log(datos);
+                //LLenar contenido
+                const contenido = document.getElementById('contenidoModalEliminar2');
+                let template = '';
+
+                if(datos.departamentos.length > 0 || datos.personas.length > 0 || datos.puestosDeTrabajos.length > 0){
+
+                    template += `
+                    <h4 class="text-danger">Si la elimina, todas las demas entidades seran eliminadas.</h4>
+                    <div id="accordion">
+                    `;
+
+                        if(datos.departamentos.length > 0){
+                            template += `
+                            <div class="card">
+                                <div class="card-header bg-danger" id="headingOne">
+                                    <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne"  aria-controls="collapseOne" aria-expanded="false">
+                                        Departamentos <span class="badge badge-pill badge-light">${datos.departamentos.length}</span>
+                                    </h6>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                            `;
+
+                            for (let i = 0; i < datos.departamentos.length; i++) {
+                                template += `
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-danger">${datos.departamentos[i].nombre}</li>
+                                </ul>
+                                `;
+                            }
+
+                            template += `
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+                        }
+
+                        if(datos.personas.length > 0){
+                            template += `
+                            <div class="card">
+                                <div class="card-header bg-danger" id="headingTwo">
+                                    <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Personas <span class="badge badge-pill badge-light">${datos.personas.length}</span>
+                                    </h6>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div class="card-body">
+                            `;
+
+                            for (let i = 0; i < datos.personas.length; i++) {
+                                template += `
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-danger">${datos.personas[i].nombre}</li>
+                                    </ul>
+                                    `;
+                            }
+
+                            template += `
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+
+                        if(datos.puestosDeTrabajos.length > 0){
+                            template += `
+                            <div class="card">
+                                <div class="card-header bg-danger" id="headingThree">
+                                    <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Puestos de Trabajos <span class="badge badge-pill badge-light">${datos.puestosDeTrabajos.length}</span>
+                                    </h6>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                            `;
+
+                            for (let i = 0; i < datos.puestosDeTrabajos.length; i++) {
+                                template += `
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-danger">${datos.puestosDeTrabajos[i].nombre}</li>
+                                    </ul>
+                                    `;
+                            }
+
+                            template += `
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+
+                    template += `
+                    </div>
+                    `;
+
+                }
+
+                contenido.innerHTML = template;
+
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
    }
 
 //Funciones de validacion

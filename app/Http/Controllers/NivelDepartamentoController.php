@@ -108,4 +108,11 @@ class NivelDepartamentoController extends Controller
         return response()->json($niveles);
     }
 
+    public function getDepartamentosDependientes($id){
+        $nivel = NivelDepartamento::findOrFail($id);
+        $departamentos = $nivel->departamentos;
+
+        return response()->json(['departamentos' => $departamentos]);
+    }
+
 }

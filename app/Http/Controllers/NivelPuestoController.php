@@ -106,4 +106,11 @@ class NivelPuestoController extends Controller
         return response()->json($niveles);
     }
 
+    public function getPuestosDependientes($id){
+        $nivel = NivelPuesto::findOrFail($id);
+        $puestos = $nivel->puestosDeTrabajos;
+
+        return response()->json(['puestos' => $puestos]);
+    }
+
 }

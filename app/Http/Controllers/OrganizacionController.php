@@ -25,12 +25,6 @@ class OrganizacionController extends Controller
     }
 
 
-    public function create()
-    {
-
-    }
-
-
     public function store(Request $request)
     {
         //PARA ALMACENAR LOS DATOS
@@ -96,6 +90,14 @@ class OrganizacionController extends Controller
         $organizacion = Organizacion::findOrFail($id);
         //la retorno al fetch
         return response()->json($organizacion);
+    }
+
+    public function getDatosDependientes($organizacion_id){
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+        $departamentos = $organizacion->departamentos;
+        $puestosDeTrabajos = $organizacion->puestosDeTrabajos;
+        $personas = $organizacion->personas;
+        return response()->json(['departamentos' => $departamentos,'personas' => $personas,'puestosDeTrabajos' => $puestosDeTrabajos]);
     }
 
 

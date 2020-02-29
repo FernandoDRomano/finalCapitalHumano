@@ -11,3 +11,22 @@
 .correcto-input{
     border-color: green;
 }
+
+.blue {
+    background-color: #1A237E!important;
+    color: white;
+}
+
+.blue-oscuro{
+    background-color: #000639!important;
+    color: white;
+}
+
+.blue-marino{
+    background-color: #01579B;
+    color: white;
+}
+
+.celeste{
+    background-color: #E1F5FE;
+}

@@ -3,7 +3,7 @@
 @section('menu')
 
 <li class="nav-item">
-    <a href="{{url('organizaciones')}}" class="nav-link">
+    <a href="{{url('organizaciones')}}" class="nav-link text-white">
         <i class="nav-icon fas fa-building"></i>
         <p>
           Organizaciones
@@ -12,8 +12,8 @@
 </li>
 
 <li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-sitemap"></i>
+    <a href="#" class="nav-link text-white">
+        <i class="fas fa-layer-group nav-icon"></i>
       <p>
         Niveles
         <i class="right fas fa-angle-left"></i>
@@ -21,19 +21,19 @@
     </a>
     <ul class="nav nav-treeview">
       <li class="nav-item">
-        <a href="{{url('nivelesDepartamentales')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
+        <a href="{{url('nivelesDepartamentales')}}" class="nav-link text-white">
+            <i class="fas fa-boxes nav-icon"></i>
           <p>Nivel de Departamentos</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{url('nivelesPuestos')}}" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Nivel de Puestos</p>
+        <a href="{{url('nivelesPuestos')}}" class="nav-link text-white">
+            <i class="fas fa-sort-amount-up-alt nav-icon"></i>
+            <p>Nivel de Puestos</p>
         </a>
       </li>
     </ul>
-  </li>
+</li>
 
 @endsection
 
