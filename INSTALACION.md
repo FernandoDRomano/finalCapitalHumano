@@ -77,6 +77,6 @@ deben cerrar la terminal porque sino no les va a andar
 y luego entrar con el navegador
 
 
-
+10. Si tienen dudas pueden entrar a https://styde.net/como-instalar-proyectos-existentes-de-laravel/ explica casi lo mismo que les explique yo.
 
 
