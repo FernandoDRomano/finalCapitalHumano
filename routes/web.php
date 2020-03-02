@@ -167,3 +167,12 @@ Route::delete('organizacion/{organizacion}/asignaciones/eliminar/{id}', [
 Route::get('organizacion/{organizacion}/personas/{persona}/getPuestosDeTrabajosLibres/{departamento_id}', [
     'uses' => 'AsignacionController@getPuestosDeTrabajosLibres'
 ]);
+
+//Organigrama
+Route::get('organizacion/{organigrama}/getOrganigrama', [
+    'uses' => 'OrganizacionController@getOrganigrama'
+]);
+
+Route::get('organizaciones/{organizacion}/getHijos', [
+    'uses' => 'OrganizacionController@getHijos'
+]);

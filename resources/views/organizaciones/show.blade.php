@@ -15,6 +15,8 @@
     <h1>Organización: {{$organizacion->nombre}}</h1>
 
     <div id="chart-container"></div>
+    <div class="border-danger" style="width:100%; height:900px;" id="orgchart"/>
+
 
 @endsection
 
@@ -22,56 +24,79 @@
 
 <script>
 
-/*
+//Token
+const token = document.querySelector("meta[name='csrf-token']").getAttribute('content');
 
-(function($) {
-  $(function() {
-   var ds = {
-     'name': 'Fernando',
-     'title': 'Presidente',
-     'children': [
-       { 'name': 'Bo Miao', 'title': 'department manager' ,
-       'children': [
-           { 'name': 'Tie Hua', 'title': 'senior engineer' },
-           { 'name': 'Hei Hei', 'title': 'senior engineer',
-             'children': [
-               { 'name': 'Pang Pang', 'title': 'engineer' },
-               { 'name': 'Xiang Xiang', 'title': 'UE engineer' }
-             ]
-            }
-          ]
-       },
-       { 'name': 'Su Miao', 'title': 'department manager',
-         'children': [
-           { 'name': 'Tie Hua', 'title': 'senior engineer' },
-           { 'name': 'Hei Hei', 'title': 'senior engineer',
-             'children': [
-               { 'name': 'Pang Pang', 'title': 'engineer' },
-               { 'name': 'Xiang Xiang', 'title': 'UE engineer',
-               'children': [
-                    { 'name': 'Pang Pang', 'title': 'engineer' },
-                    { 'name': 'Xiang Xiang', 'title': 'UE engineer' }
-                    ]
-               }
-             ]
-            }
-          ]
-        },
-        { 'name': 'Hong Miao', 'title': 'department manager' },
-        { 'name': 'Chun Miao', 'title': 'department manager' }
-      ]
-    };
+window.onload = function() {
 
-    var oc = $('#chart-container').orgchart({
-      'data' : ds,
-      'nodeContent': 'title'
-    });
+            const url = {{$organizacion->id}} + `/getHijos/`;
+            //LLAMADA A FETCH
+            fetch(url, {
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+                method: 'get',
+                credentials: "same-origin",
+            })
+            .then(response =>{
+                console.log(response);
+                return response.json();
+            })
+            .then(datos => {
+                let data = leerDepartamentos(datos);
 
-  });
-})(jQuery);
+                setTimeout(() => {
+                    var chart = new OrgChart(document.getElementById("orgchart"), {
+                        nodeBinding: {
+                            field_0: "name"
+                        },
+                        template: "mila",
+                        menu: {
+                            pdf: { text: "Exportar PDF" },
+                            png: { text: "Exportar PNG" },
+                            svg: { text: "Exportar SVG" },
+                        },
+                        nodes: datos
+                    });
+                }, 3000);
 
 
-*/
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+}
+
+
+function leerDepartamentos(datos){
+
+
+    for (let i = 0; i < datos.length; i++) {
+        datos[i]['name'] = datos[i].nombre;
+        delete datos[i].nombre;
+
+        if(datos[i].depende_departamento_id){
+            datos[i]['pid'] = datos[i].depende_departamento_id;
+            delete datos[i].depende_departamento_id;
+        }else{
+            delete datos[i].depende_departamento_id;
+        }
+
+
+    }
+
+    return JSON.stringify(datos);
+
+
+}
+
+
+
 
 </script>
 

@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Organizacion;
 use App\Departamento;
 use App\Http\Requests\SaveOrganizacionRequest;
+use App\NivelDepartamento;
 use Illuminate\Auth\Access\Response;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 class OrganizacionController extends Controller
 {
@@ -99,6 +102,51 @@ class OrganizacionController extends Controller
         $personas = $organizacion->personas;
         return response()->json(['departamentos' => $departamentos,'personas' => $personas,'puestosDeTrabajos' => $puestosDeTrabajos]);
     }
+
+    //PARA REALIZAR EL ORGANIGRAMA
+    public function getOrganigrama($organizacion_id){
+        //Busco los niveles departamentales
+        $nivelesDepartamentales = NivelDepartamento::orderBy('jerarquia', 'ASC')->get();
+        return response()->json($nivelesDepartamentales);
+    }
+
+    public function getHijos($organizacion_id){
+        $departamentos = Departamento::where('organizacion_id', $organizacion_id)->select('id','nombre','depende_departamento_id')->get();
+        return response()->json($departamentos);
+    }
+
+    /*
+    public function getHijos($organizacion_id){
+        //Busco el departamento del primer nivel
+        $departamentos = Departamento::where('organizacion_id', $organizacion_id)->get();
+        $departamentosPadres = [];
+
+        foreach ($departamentos as $key => $departamento) {
+            if($departamento->nivelDepartamento->jerarquia == 1){
+                array_push($departamentosPadres, $departamento);
+            }
+        }
+
+        //Recorro los departamentos hijos
+        $departamentos = $this->recorrerHijos($departamentosPadres);
+
+        //Retorno
+        return response()->json($departamentos);
+    }
+
+    //Funcion recursiva para devolver todos los departamentos
+    public function recorrerHijos($departamentoPadre){
+            //Recorro el departamento
+            foreach ($departamentoPadre as $value) {
+                //Por cada departamento que viene en el arreglo vuelvo a llamar a la funcion recursiva
+                $this->recorrerHijos($value->departamentos);
+            }
+
+        //Retorno el departamento con los hijos que va encontrando
+        return $departamentoPadre;
+
+    }
+    */
 
 
 }
