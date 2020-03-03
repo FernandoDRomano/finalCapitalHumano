@@ -47,7 +47,8 @@
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Niveles de Puestos</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar Nuevo Nivel de Puestos de Trabajo al Sistema">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
     </div>
@@ -80,8 +81,10 @@
                 <td>{{$nivel->id}}</td>
                 <td>{{$nivel->jerarquia . ' - ' . $nivel->nombre}}</td>
                 <td>
-                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$nivel->id}}"><i class="fas fa-edit" data-id="{{$nivel->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$nivel->id}}"><i class="fas fa-trash-alt" data-id="{{$nivel->id}}"></i></a>
+                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar el Nivel de Puesto de Trabajo del Sistema" data-id="{{$nivel->id}}"><i class="fas fa-edit" data-id="{{$nivel->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar el Nivel de Puesto de Trabajo del Sistema" data-id="{{$nivel->id}}"><i class="fas fa-trash-alt" data-id="{{$nivel->id}}"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -244,6 +247,13 @@
 @section('script')
 
 <script>
+
+    /*
+    Tooltips
+    */
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
 
     /*
         LIMPIAR MODAL AL CERRAR
