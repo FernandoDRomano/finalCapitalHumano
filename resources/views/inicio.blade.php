@@ -64,8 +64,8 @@
                     <div class="card-body text-dark text-center">
                         <h3 class="card-title text-center font-weight-bold">Coñequir Daniel Jorge Luis </h3>
                         <p class="card-text text-left font-weight-bold">Legago: 34769</p>
-                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=100008141859795" target="_blank" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
             </div>
@@ -82,8 +82,8 @@
                     <div class="card-body text-dark text-center">
                         <h3 class="card-title text-center font-weight-bold">Romano Fernando Daniel</h3>
                         <p class="card-text text-left font-weight-bold">Legago: 35852</p>
-                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/fernandodaniel.romano" target="_blank" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="https://github.com/fer35548988" target="_blank" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
             </div>
@@ -100,8 +100,8 @@
                     <div class="card-body text-dark text-center">
                         <h3 class="card-title text-center font-weight-bold">Romero Stefania Anabel</h3>
                         <p class="card-text text-left font-weight-bold">Legago: 34785</p>
-                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/anabel.romero3" target="_blank" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
             </div>
@@ -118,8 +118,8 @@
                     <div class="card-body text-dark text-center">
                         <h3 class="card-title text-center font-weight-bold">Ruiz Jorge Maximiliano</h3>
                         <p class="card-text text-left font-weight-bold">Legago: 34546</p>
-                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/maxi.ruiz.79" target="_blank" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
             </div>
