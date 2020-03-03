@@ -55,6 +55,9 @@
     stroke: black;
 }
 
+.badge{
+    font-size: 15px !important;
+}
 
   /*
     PARA EL CARD

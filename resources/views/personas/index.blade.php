@@ -12,12 +12,13 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Personas</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar Nueva Persona a la Organización">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
     </div>
@@ -32,6 +33,19 @@
                         <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Buscar</button>
                     </div>
                 </form>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row d-flex justify-content-between align-items-center">
+                  <label for="cantidadPuesto" class="col-md-5 text-dark">Cantidad de Puestos de Trabajo</label>
+                  <select class="form-control col-md-7" name="cantidadPuesto" id="cantidadPuesto">
+                    <option>Seleccionar</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3+">Más de 3</option>
+                    <option value="todos">Todos</option>
+                  </select>
+                </div>
             </div>
         </div>
 
@@ -56,11 +70,20 @@
                 <td>{{$persona->dni}}</td>
                 <td>{{$persona->fechaNacimiento}}</td>
                 <td>{{$persona->direccion}}</td>
-                <td>{{$persona->puestosDeTrabajos->count() }}</td>
                 <td>
-                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$persona->id}}"><i class="fas fa-edit" data-id="{{$persona->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$persona->id}}"><i class="fas fa-trash-alt" data-id="{{$persona->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="{{route('personas.show',['organizacion' => $organizacion->id, 'persona' => $persona->id])}}" role="button"><i class="fas fa-info-circle"></i></a>
+                    @if ($persona->puestosDeTrabajos->count() > 0)
+                        <span class="badge badge-pill badge-info">{{$persona->puestosDeTrabajos->count() }}</span>
+                    @else
+                        <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar los datos de la Persona" data-id="{{$persona->id}}"><i class="fas fa-edit" data-id="{{$persona->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar la Persona" data-id="{{$persona->id}}"><i class="fas fa-trash-alt" data-id="{{$persona->id}}"></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{route('personas.show',['organizacion' => $organizacion->id, 'persona' => $persona->id])}}"
+                    data-tooltip="tooltip" data-placement="top" title="Detalle de los Puestos de Trabajos Asignados" role="button"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -235,6 +258,14 @@
 
 <script>
     /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
+
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
+
+    /*
         INICIALIZANDO EL DATEPICKER
     */
     $('.bootstrap-datepicker').datepicker({
@@ -243,6 +274,7 @@
         clearBtn: true,
         orientation: "bottom auto"
     });
+
     /*
         FIN DE LA CONFIGURACIÓN DEL DATEPICKER
     */
@@ -288,6 +320,8 @@
     let campoErrorDniEditar = document.querySelector('#errorTxtDniEditar');
     let campoErrorFechaNacimientoEditar = document.querySelector('#errorFechaNacimientoEditar');
 
+    const cantidadPuesto = document.getElementById('cantidadPuesto');
+
     /*
         EVENTSLISTENERS
     */
@@ -309,6 +343,9 @@
         apellidoEditar.addEventListener('input', validarApellidoEditar);
         direccionEditar.addEventListener('input', validarDireccionEditar);
         dniEditar.addEventListener('input', validarDniEditar);
+
+        //Para Filtrar por cantidad de puestos de trabajos
+        cantidadPuesto.addEventListener('input', getPersonasPorCantidadDePuestos);
     }
 
     /*
@@ -558,6 +595,70 @@
     /*
         PARA TRAER ELEMENTOS
     */
+
+    function getPersonasPorCantidadDePuestos(e){
+        if (e.target.value != "Seleccionar") {
+            const url = `getPersonas/${e.target.value}`;
+            //LLAMADA A FETCH
+            fetch(url, {
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+                },
+                method: 'get',
+                credentials: "same-origin",
+            })
+            .then(response =>{
+                console.log(response);
+                return response.json();
+            })
+            .then(datos => {
+                console.log(datos);
+                //Limpio la tabla y el paginador
+                const paginador = document.querySelector('.pagination');
+
+                if(paginador){
+                    paginador.remove();
+                }
+                tabla.innerHTML = "";
+
+                //Cargo en la tabla
+                let template = "";
+
+                datos.forEach(dato => {
+                    template += `
+                    <tr>
+                        <td>${dato.id}</td>
+                        <td>${dato.apellido + ', ' + dato.nombre}</td>
+                        <td>${dato.dni}</td>
+                        <td>${dato.fechaNacimiento}</td>
+                        <td>${dato.direccion}</td>
+                        <td>
+                            ${(dato.puestos_de_trabajos_count) ? `<span class="badge badge-pill badge-info">${dato.puestos_de_trabajos_count}</span>` : `<span class="badge badge-pill badge-secondary">No Tiene</span>`}
+
+                        </td>
+                        <td>
+                            <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                            data-tooltip="tooltip" data-placement="top" title="Editar los datos de la dato" data-id="${dato.id}"><i class="fas fa-edit" data-id="${dato.id}"></i></a>
+                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                            data-tooltip="tooltip" data-placement="top" title="Eliminar la dato" data-id="${dato.id}"><i class="fas fa-trash-alt" data-id="${dato.id}"></i></a>
+                            <a name="btnVer" class="btn btn-success text-white" href="/organizacion/${dato.organizacion_id}/personas/${dato.id}"
+                            data-tooltip="tooltip" data-placement="top" title="Detalle de los Puestos de Trabajos Asignados" role="button"><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    `;
+                });
+
+                tabla.innerHTML = template;
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    }
 
    function getDatosForUpdate(e){
         //PRIMERO VERIFICO QUE SE HAGA CLICK EN EL BOTON DE EDITAR

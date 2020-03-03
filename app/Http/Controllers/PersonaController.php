@@ -153,4 +153,32 @@ class PersonaController extends Controller
         return response()->json($persona);
     }
 
+    //Estoy recibiendo dos parametros por la URI, ver rutas
+    public function getPersonas($organizacion_id, $cantidadPuesto){
+        //Busco la organizacion
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+        $personas = $organizacion->personas()->withCount('puestosDeTrabajos')->get();
+        $personasArray = [];
+
+        foreach($personas as $persona){
+
+            if ($cantidadPuesto == '3+') {
+                if ($persona->puestosDeTrabajos->count() > 3) {
+                    array_push($personasArray, $persona);
+                }
+            }else if($cantidadPuesto == 'todos'){
+                array_push($personasArray, $persona);
+            }else{
+                if ($persona->puestosDeTrabajos->count() == $cantidadPuesto) {
+                    array_push($personasArray, $persona);
+                }
+            }
+
+
+        }
+
+        //La retorno
+        return response()->json($personasArray);
+    }
+
 }

@@ -53,6 +53,9 @@ Route::resource('organizacion/{id}/personas', 'PersonaController');
 Route::get('organizacion/{organizacion}/getPersona/{id}' , [
     'uses' => 'PersonaController@getPersona'
 ]);
+Route::get('organizacion/{organizacion}/getPersonas/{cantidadPuesto}' , [
+    'uses' => 'PersonaController@getPersonas'
+]);
 Route::post('organizacion/{organizacion}/personas/crear', [
     'uses' => 'PersonaController@storeDesdePuestoDeTrabajo'
 ]);
