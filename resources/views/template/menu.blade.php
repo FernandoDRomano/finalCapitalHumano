@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a href="{{route('organizaciones.index')}}" class="nav-link text-white">
+    <a href="{{route('organizaciones.index')}}" class="nav-link text-white" >
         <i class="nav-icon fas fa-building"></i>
         <p>
           Organizaciones
@@ -55,26 +55,3 @@
     </ul>
 </li>
 
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link text-white">
-        <i class="fas fa-layer-group nav-icon"></i>
-      <p>
-        Niveles
-        <i class="right fas fa-angle-left"></i>
-      </p>
-    </a>
-    <ul class="nav nav-treeview">
-      <li class="nav-item">
-        <a href="{{url('nivelesDepartamentales')}}" class="nav-link text-white">
-            <i class="fas fa-boxes nav-icon"></i>
-          <p>Nivel de Departamentos</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{url('nivelesPuestos')}}" class="nav-link text-white">
-            <i class="fas fa-sort-amount-up-alt nav-icon"></i>
-            <p>Nivel de Puestos</p>
-        </a>
-      </li>
-    </ul>
-</li>

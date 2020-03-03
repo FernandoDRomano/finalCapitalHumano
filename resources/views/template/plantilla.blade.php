@@ -138,5 +138,6 @@
 
 @yield('script')
 
+
 </body>
 </html>
