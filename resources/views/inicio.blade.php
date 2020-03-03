@@ -39,7 +39,95 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4">Final de Gestión de Capital Humano</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold">Final de Gestión de Capital Humano</h1>
+
+<section id="team">
+    <div class="container my-3 py-5 text-center">
+
+        <div class="row mb-5 pb-3">
+            <div class="col mb-5">
+                <h1 class="text-dark">Nuestro Equipo</h1>
+            </div>
+        </div>
+
+        <div class="row my-5">
+
+            <div class="col-md-6 col-lg-3 my-5 py-5 my-md-5 py-md-5 my-lg-0 py-lg-0">
+                <div class="card shadow">
+                    <div class="imagen d-flex justify-content-center">
+                        <img src="{{asset('imagenes/daniel.jpeg')}}" class="img-fluid"
+                        style="width: 180px;
+                        height: 180px;
+                        border-radius: 50%;
+                        margin-top: -90px;">
+                    </div>
+                    <div class="card-body text-dark text-center">
+                        <h3 class="card-title text-center font-weight-bold">Coñequir Daniel Jorge Luis </h3>
+                        <p class="card-text text-left font-weight-bold">Legago: 34769</p>
+                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 my-5 py-5 my-md-5 py-md-5 my-lg-0 py-lg-0 ">
+                <div class="card shadow">
+                    <div class="imagen d-flex justify-content-center">
+                        <img src="{{asset('imagenes/fernando.jpg')}}" class="img-fluid"
+                        style="width: 180px;
+                        height: 180px;
+                        border-radius: 50%;
+                        margin-top: -90px;">
+                    </div>
+                    <div class="card-body text-dark text-center">
+                        <h3 class="card-title text-center font-weight-bold">Romano Fernando Daniel</h3>
+                        <p class="card-text text-left font-weight-bold">Legago: 35852</p>
+                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 my-5 py-5 my-md-5 py-md-5 my-lg-0 py-lg-0">
+                <div class="card shadow">
+                    <div class="imagen d-flex justify-content-center">
+                        <img src="{{asset('imagenes/anabel.jpeg')}}" class="img-fluid"
+                        style="width: 180px;
+                        height: 180px;
+                        border-radius: 50%;
+                        margin-top: -90px;">
+                    </div>
+                    <div class="card-body text-dark text-center">
+                        <h3 class="card-title text-center font-weight-bold">Romero Stefania Anabel</h3>
+                        <p class="card-text text-left font-weight-bold">Legago: 34785</p>
+                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 my-5 py-5 my-md-5 py-md-5 my-lg-0 py-lg-0">
+                <div class="card shadow">
+                    <div class="imagen d-flex justify-content-center">
+                        <img src="{{asset('imagenes/maxi.jpeg')}}" class="img-fluid"
+                        style="width: 180px;
+                        height: 180px;
+                        border-radius: 50%;
+                        margin-top: -90px;">
+                    </div>
+                    <div class="card-body text-dark text-center">
+                        <h3 class="card-title text-center font-weight-bold">Ruiz Jorge Maximiliano</h3>
+                        <p class="card-text text-left font-weight-bold">Legago: 34546</p>
+                        <a href="#" class="px-1" style="font-size: 30px; color:#4267B2;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="px-1" style="font-size: 30px; color:black;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 @endsection
 
