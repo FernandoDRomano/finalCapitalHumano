@@ -12,10 +12,64 @@
 
 @section('contenido')
 
-    <h1>Organización: {{$organizacion->nombre}}</h1>
+    <h1 class="text-center display-4 text-dark font-weight-bold">Organización: {{$organizacion->nombre}}</h1>
 
-    <div id="chart-container"></div>
-    <div class="border-danger" style="width:100%; height:900px;" id="orgchart"/>
+    <div class="row mt-5 justify-content-center">
+
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                      <div class="inner">
+                        <h3>{{$organizacion->departamentos->count()}}</h3>
+                        <p>Departamentos Registrados</p>
+                      </div>
+                      <div class="icon">
+                        <i class="nav-icon fas fa-sitemap"></i>
+                      </div>
+                      <a href="{{route('departamentos.index', ['id' => $organizacion->id])}}" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                      <div class="inner">
+                        <h3>{{$organizacion->puestosDeTrabajos->count()}}</h3>
+                        <p>Puestos de Trabajos Registrados</p>
+                      </div>
+                      <div class="icon">
+                        <i class="far fa-id-card nav-icon"></i>
+                      </div>
+                      <a href="{{route('puestosDeTrabajos.index', ['id' => $organizacion->id])}}" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                      <div class="inner">
+                        <h3 class="text-white">{{$organizacion->personas->count()}}</h3>
+                        <p class="text-white">Personas Registradas</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fas fa-users"></i>
+                      </div>
+                      <a href="{{route('personas.index', ['id' => $organizacion->id])}}" class="small-box-footer"><span class="text-white">Más Información</span> <i class="fa fa-arrow-circle-right text-white"></i></a>
+                    </div>
+                </div>
+
+    </div>
+
+    <div class="row justify-content-center">
+            <div class="spinner"></div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col">
+            <div class="border-danger" style="width:100%; height:800px;" id="orgchart"/>
+        </div>
+    </div>
+
 
 
 @endsection
@@ -23,6 +77,12 @@
 @section('script')
 
 <script>
+
+function mostrarSpinner(){
+	const spinner = document.createElement('img');
+	spinner.src = "{{asset('img/spinner.gif')}}";
+	document.querySelector('.spinner').appendChild(spinner);
+}
 
 //Token
 const token = document.querySelector("meta[name='csrf-token']").getAttribute('content');
@@ -46,10 +106,18 @@ window.onload = function() {
                 return response.json();
             })
             .then(datos => {
+                mostrarSpinner();
                 let data = leerDepartamentos(datos);
 
                 setTimeout(() => {
+                    //BUSCO EL SPINNER PARA ELIMINARLO
+			        const spinner = document.querySelector('.spinner img');
+			        spinner.remove();
+                    //GRAFICO EL ORGANIGRAMA
+                    OrgChart.templates.ana.field_0 = '<text class="field_0"  style="font-size: 30px;" fill="#ffffff" x="125" y="30" text-anchor="middle">{val}</text>';
+
                     var chart = new OrgChart(document.getElementById("orgchart"), {
+                        scaleInitial: OrgChart.match.height,
                         nodeBinding: {
                             field_0: "name"
                         },
@@ -61,7 +129,7 @@ window.onload = function() {
                         },
                         nodes: datos
                     });
-                }, 3000);
+                }, 4000);
 
 
 

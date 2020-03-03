@@ -46,8 +46,9 @@
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
-        <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Organizaciones</span> </strong> </h3>
-        <a type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+    <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Organizaciones ({{$organizaciones->count()}})</span> </strong> </h3>
+        <a type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+        data-tooltip="tooltip" data-placement="top" title="Agregar una Nueva Organización">
             <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
         </a>
     </div>
@@ -80,9 +81,12 @@
                 <td>{{$organizacion->id}}</td>
                 <td>{{$organizacion->nombre}}</td>
                 <td>
-                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$organizacion->id}}"><i class="fas fa-edit" data-id="{{$organizacion->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$organizacion->id}}"><i class="fas fa-trash-alt" data-id="{{$organizacion->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="{{action('OrganizacionController@show', $organizacion->id)}}" role="button"><i class="fas fa-info-circle"></i></a>
+                    <a name="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-id="{{$organizacion->id}}" data-tooltip="tooltip" data-placement="top" title="Editar la Organización"><i class="fas fa-edit" data-id="{{$organizacion->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-id="{{$organizacion->id}}" data-tooltip="tooltip" data-placement="top" title="Eliminar la Organización"><i class="fas fa-trash-alt" data-id="{{$organizacion->id}}"></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{action('OrganizacionController@show', $organizacion->id)}}"
+                    role="button" data-tooltip="tooltip" data-placement="top" title="Detalles de la Organización"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -199,7 +203,17 @@
 
 @section('script')
 
+
 <script>
+
+    /*
+        Activando los tooltips
+    */
+
+    $(function () {
+        $('[data-tooltip="tooltip"]').tooltip()
+    })
+
     //Variables
     const token = document.querySelector("meta[name='csrf-token']").getAttribute('content');
     const formAgregar = document.getElementById('formAgregar');
