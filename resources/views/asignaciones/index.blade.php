@@ -12,12 +12,13 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Asignación de Personas a los Puestos de Trabajos</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar Asignación de Puesto de Trabajo a las Personas">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
     </a>
     </div>
@@ -54,8 +55,10 @@
                 <td>{{$asignacion->puesto}}</td>
                 <td>{{$asignacion->personaApellido . ', ' . $asignacion->personaNombre}}</td>
                 <td>
-                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$asignacion->id}}"><i class="fas fa-edit" data-id="{{$asignacion->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$asignacion->id}}"><i class="fas fa-trash-alt" data-id="{{$asignacion->id}}"></i></a>
+                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar datos de la Asignación del Puesto de Trabajo" data-id="{{$asignacion->id}}"><i class="fas fa-edit" data-id="{{$asignacion->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar Asignación del Puesto de Trabajo" data-id="{{$asignacion->id}}"><i class="fas fa-trash-alt" data-id="{{$asignacion->id}}"></i></a>
                 </td>
             </tr>
 
@@ -235,6 +238,14 @@
 /*
     JQUERY
 */
+
+    /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
+
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
 
 //$('.js-example-basic-multiple').select2({});
 $('.selectMultiple').select2({
