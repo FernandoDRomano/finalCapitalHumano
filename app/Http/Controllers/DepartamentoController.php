@@ -19,6 +19,7 @@ class DepartamentoController extends Controller
     {
         //Busco la organizacion
         $organizacion = Organizacion::findOrFail($organizacion_id);
+        $niveles = NivelDepartamento::orderBy('jerarquia', 'ASC')->get();
 
         if ($request->buscar == null) {
             //Si el request es nulo traigo todas los departamentos que pertenezcan a la organizacion
@@ -28,7 +29,7 @@ class DepartamentoController extends Controller
             $departamentos = Departamento::search($request->buscar)->where('organizacion_id', $organizacion->id)->orderBy('id', 'ASC')->paginate(10);
         }
 
-        return view('departamentos.index')->with(['departamentos' => $departamentos, 'organizacion' => $organizacion]);
+        return view('departamentos.index')->with(['departamentos' => $departamentos, 'organizacion' => $organizacion, 'niveles' => $niveles]);
 
     }
 

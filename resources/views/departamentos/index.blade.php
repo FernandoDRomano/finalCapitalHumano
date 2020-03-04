@@ -115,6 +115,11 @@
                             <div class="form-group">
                                 <label for="selectNivelDepartamento">Nivel</label>
                                 <select id="selectNivelDepartamentoAgregar" class="form-control" name="selectNivelDepartamento">
+                                    <option value="">Seleccionar</option>
+                                    @forelse ($niveles as $nivel)
+                                    <option value="{{$nivel->id}}">{{$nivel->jerarquia .' - '.$nivel->nombre}}</option>
+                                    @empty
+                                    @endforelse
                                 </select>
                                 <div id="errorSelectNivelDepartamentoAgregar"></div>
                             </div>
@@ -166,15 +171,21 @@
 
                         <div class="form-group">
                             <label for="selectNivelDepartamento">Nivel</label>
-                            <select id="selectNivelDepartamentoEditar" class="form-control" name="selectNivelDepartamento" readonly>
+                            <select id="selectNivelDepartamentoEditar" class="form-control" name="selectNivelDepartamento" disabled>
+                                <option value="">Seleccionar</option>
+                                    @forelse ($niveles as $nivel)
+                                    <option value="{{$nivel->id}}">{{$nivel->jerarquia .' - '.$nivel->nombre}}</option>
+                                    @empty
+                                    @endforelse
                             </select>
+
                             <div id="errorSelectNivelDepartamentoEditar"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="selectDependeDe">Depende de</label>
                             <select id="selectDependeDeEditar" class="form-control" name="selectDependeDe">
-                                <option selected>Seleccionar</option>
+
                             </select>
                             <div id="errorSelectDependeDeEditar"></div>
                         </div>
@@ -276,7 +287,7 @@
 
     function cargarEventsListeners(){
         //Para agregar
-        btnAgregar.addEventListener('click', getNivelesDepartamentales);
+        //btnAgregar.addEventListener('click', getNivelesDepartamentales);
         formAgregar.addEventListener('submit', agregar);
         nombreAgregar.addEventListener('input', validarNombreAgregar);
         nivelAgregar.addEventListener('change', validarSelectAgregar);
@@ -477,21 +488,18 @@
             .then(datos => {
                 console.log(datos);
                 //Cargo los niveles departamentales en el modal de editar
-                getNivelesDepartamentales();
+                //getNivelesDepartamentales();
                 //Cargo el nombre
                 nombreEditar.value = datos.nombre;
 
-                //Espero 0.5 segundo, dando tiempo que se carguen los niveles desde fetch. Luego selecciono el nivel
-                setTimeout(() => {
-                    //Recorro el select de niveles para colocar en true el selected del nivel escogido
-                    for (let i = 0; i < nivelEditar.length; i++) {
-                        if(nivelEditar[i].value == datos.nivel_departamento_id){
-                            nivelEditar[i].selected = true;
-                        }
+                //Recorro el select de niveles para colocar en true el selected del nivel escogido
+                for (let i = 0; i < nivelEditar.length; i++) {
+                    if(nivelEditar[i].value == datos.nivel_departamento_id){
+                        nivelEditar[i].selected = true;
                     }
-                    //Obtengo el nivel superior del nivel seleccionado anteriormente
-                    getNivelSuperiorEditar(nivelEditar.value);
-                }, 500);
+                }
+
+                getNivelSuperiorEditar(nivelEditar.value);
 
                 //Espero 1 segundo, dando tiempo que se carguen los departamientos correspondientes al nivel superior
                 setTimeout(() => {
@@ -592,6 +600,7 @@ function cargarNivelesDepartamentales(datos){
 
     nivelEditar.innerHTML = template;
     nivelAgregar.innerHTML = template;
+
 }
 
 function getNivelSuperior(e){
