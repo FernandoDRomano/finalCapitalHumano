@@ -12,16 +12,17 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
-<h4 class="text-left font-weight-bold mb-3">Departamento: <span class="text-info">{{$departamento->nombre}}</span></h4>
-<h4 class="text-left font-weight-bold mb-3">Nivel: <span class="text-info">{{$departamento->nivelDepartamento->nombre}}</span> </h4>
+<h4 class="text-left text-dark font-weight-bold mb-3">Departamento: <span class="text-info">{{$departamento->nombre}}</span></h4>
+<h4 class="text-left text-dark font-weight-bold mb-3">Nivel: <span class="text-info">{{$departamento->nivelDepartamento->nombre}}</span> </h4>
 
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Puestos de Trabajos ({{$departamento->puestos->count()}})</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar un Nuevo Puesto de Trabajo al Departamento">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
     </a>
     </div>
@@ -59,13 +60,34 @@
                 <td>{{$puesto->id}}</td>
                 <td>{{$puesto->nombre}}</td>
                 <td>{{$puesto->nivelPuesto->nombre }}</td>
-                <td>{{$puesto->funciones->count()}}</td>
-                <td>{{$puesto->obligaciones->count()}}</td>
-                <td>{{$puesto->personas->count()}}</td>
                 <td>
-                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$puesto->id}}"><i class="fas fa-edit" data-id="{{$puesto->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$puesto->id}}"><i class="fas fa-trash-alt" data-id="{{$puesto->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="{{route('puestosDeTrabajos.show',['organizacion' => $organizacion->id, 'puesto' => $puesto->id])}}" role="button"><i class="fas fa-info-circle"></i></a>
+                    @if ($puesto->funciones->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puesto->funciones->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($puesto->obligaciones->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puesto->obligaciones->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($puesto->personas->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puesto->personas->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar los datos del Puesto de Trabajo" data-id="{{$puesto->id}}"><i class="fas fa-edit" data-id="{{$puesto->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar el Puesto de Trabajo del Departamento" data-id="{{$puesto->id}}"><i class="fas fa-trash-alt" data-id="{{$puesto->id}}"></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{route('puestosDeTrabajos.show',['organizacion' => $organizacion->id, 'puesto' => $puesto->id])}}"
+                    data-tooltip="tooltip" data-placement="top" title="Detalles del Puesto de Trabajo" role="button"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -208,8 +230,15 @@
 @section('script')
 
 <script>
+    /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
 
-/*
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
+
+    /*
         VARIABLES
     */
 

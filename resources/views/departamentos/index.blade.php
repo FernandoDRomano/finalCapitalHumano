@@ -12,12 +12,13 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Departamentos ({{$organizacion->departamentos->count()}})</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar Nuevo Departamento a la Organización">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
       </a>
     </div>
@@ -54,11 +55,20 @@
                 <td>{{$departamento->nombre}}</td>
                 <td>{{$departamento->nivelDepartamento->nombre}}</td>
                 <td>{{isset($departamento->dependeDepartamento['nombre']) ? $departamento->dependeDepartamento['nombre'] : "No Asignado"}}</td>
-                <td>{{$departamento->puestos->count()}}</td>
                 <td>
-                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$departamento->id}}"><i class="fas fa-edit" data-id="{{$departamento->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$departamento->id}}"><i class="fas fa-trash-alt" data-id="{{$departamento->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="{{route('departamentos.show',['organizacion' => $organizacion->id, 'departamento' => $departamento->id])}}" role="button"><i class="fas fa-info-circle"></i></a>
+                    @if ($departamento->puestos->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$departamento->puestos->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar los datos del Departamento" data-id="{{$departamento->id}}"><i class="fas fa-edit" data-id="{{$departamento->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar el Departamento de la Organización" data-id="{{$departamento->id}}"><i class="fas fa-trash-alt" data-id="{{$departamento->id}}"></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{route('departamentos.show',['organizacion' => $organizacion->id, 'departamento' => $departamento->id])}}"
+                    data-tooltip="tooltip" data-placement="top" title="Detalle de los Puestos de Trabajos de este Departamento" role="button"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -212,6 +222,13 @@
 @section('script')
 
 <script>
+      /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
+
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
 
     /*
         VARIABLES
