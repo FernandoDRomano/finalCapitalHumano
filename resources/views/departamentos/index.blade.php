@@ -69,6 +69,8 @@
                     data-tooltip="tooltip" data-placement="top" title="Eliminar el Departamento de la Organización" data-id="{{$departamento->id}}"><i class="fas fa-trash-alt" data-id="{{$departamento->id}}"></i></a>
                     <a name="btnVer" class="btn btn-success text-white" href="{{route('departamentos.show',['organizacion' => $organizacion->id, 'departamento' => $departamento->id])}}"
                     data-tooltip="tooltip" data-placement="top" title="Detalle de los Puestos de Trabajos de este Departamento" role="button"><i class="fas fa-info-circle"></i></a>
+                    <a name="btnPDF" class="btn btn-outline-danger" href="{{action('DepartamentoController@getDepartamentoReporte',['organizacion' => $organizacion->id, 'departamento' => $departamento->id])}}"
+                    data-tooltip="tooltip" data-placement="top" title="Generar Reporte PDF" role="button"><i class="fas fa-file-pdf"></i></a>
                 </td>
             </tr>
         @endforeach

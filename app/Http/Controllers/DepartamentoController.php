@@ -10,6 +10,7 @@ use App\Http\Requests\SaveDepartamentoRequest;
 use App\Http\Controllers\OrganizacionController;
 use App\NivelPuesto;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class DepartamentoController extends Controller
 {
@@ -159,6 +160,14 @@ class DepartamentoController extends Controller
         $niveles = NivelDepartamento::orderBy('jerarquia', 'ASC')->get();
         //Retorno los niveles departamentales
         return response()->json($niveles);
+    }
+
+    public function getDepartamentoReporte($organizacion_id, $departamento_id){
+        $departamento = Departamento::findOrFail($departamento_id);
+
+        $pdf = PDF::loadView('pdf.departamento', compact('departamento'));
+
+        return $pdf->download('reporte-departamento.pdf');
     }
 
 }

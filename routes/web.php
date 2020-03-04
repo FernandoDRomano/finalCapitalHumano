@@ -81,6 +81,10 @@ Route::get('organizacion/{organizacion}/getDepartamentosDependientes/{nivel}', [
     'uses' => 'DepartamentoController@getDepartamentosDependientes'
 ]);
 
+Route::get('organizacion/{organizacion}/getDepartamentoReporte/{departamento}', [
+    'uses' => 'DepartamentoController@getDepartamentoReporte'
+]);
+
 //GRUPO DE RUTAS PARA CRUD DE PUESTOS DE TRABAJOS
 Route::resource('organizacion/{organizacion}/puestosDeTrabajos', 'PuestoTrabajoController');
 Route::get('organizacion/{organizacion}/getNivelesDePuestosDeTrabajos', [
