@@ -12,12 +12,13 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
 <div class="card">
     <div class="card-header blue-marino d-flex justify-content-between align-items-center">
       <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Gestión de Puestos de Trabajos</span></strong></h3>
-      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar">
+      <a id="btnAgregar" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregar"
+      data-tooltip="tooltip" data-placement="top" title="Agregar Nuevo Puesto de Trabajo a la Organización">
         <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
     </a>
     </div>
@@ -56,13 +57,34 @@
                 <td>{{$puestoDeTrabajo->nombre}}</td>
                 <td>{{$puestoDeTrabajo->nivelPuesto->jerarquia . ' - ' . $puestoDeTrabajo->nivelPuesto->nombre}}</td>
                 <td>{{$puestoDeTrabajo->departamento->nombre}}</td>
-                <td>{{$puestoDeTrabajo->funciones->count()}}</td>
-                <td>{{$puestoDeTrabajo->obligaciones->count()}}</td>
-                <td>{{$puestoDeTrabajo->personas->count() }}</td>
                 <td>
-                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar" data-id="{{$puestoDeTrabajo->id}}"><i class="fas fa-edit" data-id="{{$puestoDeTrabajo->id}}"></i></a>
-                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar" data-id="{{$puestoDeTrabajo->id}}"><i class="fas fa-trash-alt" data-id="{{$puestoDeTrabajo->id}}"></i></a>
-                    <a name="btnVer" class="btn btn-success text-white" href="{{route('puestosDeTrabajos.show',['organizacion' => $organizacion->id, 'puestoDeTrabajo' => $puestoDeTrabajo->id])}}" role="button"><i class="fas fa-info-circle"></i></a>
+                    @if ($puestoDeTrabajo->funciones->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puestoDeTrabajo->funciones->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($puestoDeTrabajo->obligaciones->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puestoDeTrabajo->obligaciones->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    @if ($puestoDeTrabajo->personas->count() > 0)
+                    <span class="badge badge-pill badge-info">{{$puestoDeTrabajo->personas->count()}}</span>
+                    @else
+                    <span class="badge badge-pill badge-secondary">No Tiene</span>
+                    @endif
+                </td>
+                <td>
+                    <a id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditar"
+                    data-tooltip="tooltip" data-placement="top" title="Editar datos del Puesto de Trabajo" data-id="{{$puestoDeTrabajo->id}}"><i class="fas fa-edit" data-id="{{$puestoDeTrabajo->id}}"></i></a>
+                    <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminar"
+                    data-tooltip="tooltip" data-placement="top" title="Eliminar Puesto de Trabajo" data-id="{{$puestoDeTrabajo->id}}"><i class="fas fa-trash-alt" data-id="{{$puestoDeTrabajo->id}}"></i></a>
+                    <a name="btnVer" class="btn btn-success text-white" href="{{route('puestosDeTrabajos.show',['organizacion' => $organizacion->id, 'puestoDeTrabajo' => $puestoDeTrabajo->id])}}"
+                    data-tooltip="tooltip" data-placement="top" title="Detalles del Puesto de Trabajo" role="button"><i class="fas fa-info-circle"></i></a>
                 </td>
             </tr>
         @endforeach
@@ -207,6 +229,14 @@
 @section('script')
 
 <script>
+
+    /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
+
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
 
     /*
         VARIABLES

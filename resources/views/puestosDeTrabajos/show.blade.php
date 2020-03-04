@@ -12,10 +12,10 @@
 
 @section('contenido')
 
-<h1 class="text-center display-4 font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
+<h1 class="text-center display-4 text-dark font-weight-bold mb-3">{{$organizacion->nombre}}</h1>
 
-<h4 class="text-left font-weight-bold mb-3">Departamento: <span class="text-info">{{$departamento->nombre}}</span> | <span class="text-info">{{$departamento->nivelDepartamento->nombre}}</span></h4>
-<h4 class="text-left font-weight-bold mb-3">Puesto de Trabajo: <span class="text-info">{{$puestoDeTrabajo->nombre}}</span> | <span class="text-info">{{$puestoDeTrabajo->nivelPuesto->nombre}}</span> </h4>
+<h4 class="text-left font-weight-bold mb-3 text-dark">Departamento: <span class="text-info">{{$departamento->nombre}}</span> | <span class="text-info">{{$departamento->nivelDepartamento->nombre}}</span></h4>
+<h4 class="text-left font-weight-bold mb-3 text-dark">Puesto de Trabajo: <span class="text-info">{{$puestoDeTrabajo->nombre}}</span> | <span class="text-info">{{$puestoDeTrabajo->nivelPuesto->nombre}}</span> </h4>
 
 
 <div class="row">
@@ -24,7 +24,8 @@
         <div class="card">
             <div class="card-header blue-marino d-flex justify-content-between align-items-center">
               <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Personas Asignadas ({{$puestoDeTrabajo->personas->count()}})</span></strong></h3>
-                <a id="btnAgregarPersona" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarPersona" data-id="{{$puestoDeTrabajo->id}}">
+                <a id="btnAgregarPersona" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarPersona" data-id="{{$puestoDeTrabajo->id}}"
+                    data-tooltip="tooltip" data-placement="top" title="Agregar Nueva Asignación De Puesto de Trabajo">
                 <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
             </a>
             </div>
@@ -58,7 +59,8 @@
                         <td>{{$persona->id}}</td>
                         <td>{{$persona->apellido . ', '. $persona->nombre}}</td>
                         <td>
-                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarPersona" data-id="{{$persona->id}}"><i class="fas fa-trash-alt" data-id="{{$persona->id}}"></i></a>
+                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarPersona"
+                            data-tooltip="tooltip" data-placement="top" title="Eliminar Asignación del Puesto de Trabajo" data-id="{{$persona->id}}"><i class="fas fa-trash-alt" data-id="{{$persona->id}}"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -78,7 +80,8 @@
         <div class="card">
             <div class="card-header blue-marino d-flex justify-content-between align-items-center">
               <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Funciones ({{$puestoDeTrabajo->funciones->count()}})</span></strong></h3>
-              <a id="btnAgregarFuncion" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarFuncion">
+              <a id="btnAgregarFuncion" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarFuncion"
+              data-tooltip="tooltip" data-placement="top" title="Agregar Nueva Función">
                 <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
             </a>
             </div>
@@ -112,8 +115,10 @@
                         <td>{{$funcion->id}}</td>
                         <td>{{$funcion->nombre}}</td>
                         <td>
-                            <a id="btnEditarFuncion" id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditarFuncion" data-id="{{$funcion->id}}"><i class="fas fa-edit" data-id="{{$funcion->id}}"></i></a>
-                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarFuncion" data-id="{{$funcion->id}}"><i class="fas fa-trash-alt" data-id="{{$funcion->id}}"></i></a>
+                            <a id="btnEditarFuncion" id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditarFuncion"
+                            data-tooltip="tooltip" data-placement="top" title="Editar datos de la Función" data-id="{{$funcion->id}}"><i class="fas fa-edit" data-id="{{$funcion->id}}"></i></a>
+                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarFuncion"
+                            data-tooltip="tooltip" data-placement="top" title="Eliminar la Función" data-id="{{$funcion->id}}"><i class="fas fa-trash-alt" data-id="{{$funcion->id}}"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -133,7 +138,8 @@
         <div class="card">
             <div class="card-header blue-marino d-flex justify-content-between align-items-center">
               <h3 class="card-title flex-grow-1"><strong><i class="fas fa-list"></i> <span class="mx-2 h4">Obligaciones ({{$puestoDeTrabajo->obligaciones->count()}})</span></strong></h3>
-              <a id="btnAgregarObligacion" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarObligacion">
+              <a id="btnAgregarObligacion" type="button" class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#modalAgregarObligacion"
+              data-tooltip="tooltip" data-placement="top" title="Agregar Nueva Obligación">
                 <i class="fas fa-plus-circle"></i>&nbsp;Nuevo
             </a>
             </div>
@@ -166,8 +172,10 @@
                         <td>{{$obligacion->id}}</td>
                         <td>{{$obligacion->nombre}}</td>
                         <td>
-                            <a id="btnEditarObligacion" id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditarObligacion" data-id="{{$obligacion->id}}"><i class="fas fa-edit" data-id="{{$obligacion->id}}"></i></a>
-                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarObligacion" data-id="{{$obligacion->id}}"><i class="fas fa-trash-alt" data-id="{{$obligacion->id}}"></i></a>
+                            <a id="btnEditarObligacion" id="btnEditar" class="btn btn-warning text-white editar" href="#" role="button"  data-toggle="modal" data-target="#modalEditarObligacion"
+                            data-tooltip="tooltip" data-placement="top" title="Editar datos de la Obligación" data-id="{{$obligacion->id}}"><i class="fas fa-edit" data-id="{{$obligacion->id}}"></i></a>
+                            <a name="btnEliminar" class="btn btn-danger text-white eliminar" href="#" role="button" data-toggle="modal" data-target="#modalEliminarObligacion"
+                            data-tooltip="tooltip" data-placement="top" title="Eliminar Obligación" data-id="{{$obligacion->id}}"><i class="fas fa-trash-alt" data-id="{{$obligacion->id}}"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -447,6 +455,14 @@
     /*
     JQUERY
     */
+
+    /*
+        INICIALIZANDO LOS TOOLTIPS
+    */
+
+    $(function(){
+        $('[data-tooltip="tooltip"]').tooltip();
+    });
 
     $('.selectMultiple').select2({
         placeholder: 'Seleccione opción',
