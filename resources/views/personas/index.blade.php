@@ -84,6 +84,8 @@
                     data-tooltip="tooltip" data-placement="top" title="Eliminar la Persona" data-id="{{$persona->id}}"><i class="fas fa-trash-alt" data-id="{{$persona->id}}"></i></a>
                     <a name="btnVer" class="btn btn-success text-white" href="{{route('personas.show',['organizacion' => $organizacion->id, 'persona' => $persona->id])}}"
                     data-tooltip="tooltip" data-placement="top" title="Detalle de los Puestos de Trabajos Asignados" role="button"><i class="fas fa-info-circle"></i></a>
+                    <a name="btnPDF" class="btn btn-outline-danger" href="{{action('PersonaController@getPersonaReporte',['organizacion' => $organizacion->id, 'persona' => $persona->id])}}"
+                        data-tooltip="tooltip" data-placement="top" title="Generar Reporte PDF" role="button"><i class="fas fa-file-pdf"></i></a>
                 </td>
             </tr>
         @endforeach

@@ -11,6 +11,8 @@ use Illuminate\Auth\Access\Response;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class OrganizacionController extends Controller
 {
@@ -113,6 +115,14 @@ class OrganizacionController extends Controller
     public function getHijos($organizacion_id){
         $departamentos = Departamento::where('organizacion_id', $organizacion_id)->select('id','nombre','depende_departamento_id')->get();
         return response()->json($departamentos);
+    }
+
+    public function getOrganizacionReporte($organizacion_id){
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+
+        $pdf = PDF::loadView('pdf.organizacion', compact('organizacion'));
+
+        return $pdf->download('reporte-organizacion.pdf');
     }
 
     /*

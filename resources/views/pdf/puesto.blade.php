@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <style>
 
-        @page {
+@page {
             margin: 0cm 0cm;
             font-family: Arial;
         }
@@ -59,7 +59,6 @@
             text-align: center;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 17px;
         }
 
         table tr {
@@ -92,6 +91,7 @@
         .margin-abajo{
             margin-bottom: 4rem;
         }
+
     </style>
 </head>
 <body>
@@ -103,13 +103,16 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="titulo">Organización: {{$departamento->organizacion->nombre}}</h1>
+                <h1 class="titulo">Organización: {{$puesto->departamento->organizacion->nombre}}</h1>
             </div>
         </div>
         <div class="row">
-            <h3 class="subTitulo">Departamento: {{$departamento->nombre}}</h3>
-            <h3 class="subTitulo">Nivel del Departamento: {{$departamento->nivelDepartamento->nombre}}</h3>
+            <h3 class="subTitulo">Departamento: {{$puesto->departamento->nombre}} | {{$puesto->departamento->nivelDepartamento->nombre}}</h3>
+            <h3 class="subTitulo">Puesto de Trabajo: {{$puesto->nombre}} | {{$puesto->nivelPuesto->nombre}}</h3>
         </div>
+
+        @if ($puesto->personas->count() > 0)
+
         <div class="margin-abajo ">
             <div class="">
 
@@ -117,21 +120,17 @@
                     <thead class="thead-dark text-uppercase">
                     <tr>
                         <th>N°</th>
-                        <th>Nivel</th>
-                        <th>Puesto de Trabajo</th>
-                        <th>Persona Asignada</th>
+                        <th>Persona</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     @php
                         $i = 1;
                     @endphp
-                    @foreach ($departamento->puestos as $puesto)
-                        @foreach ($puesto->personas as $persona)
+                    @foreach ($puesto->personas as $persona)
                         <tr>
                             <td>{{$i}}</td>
-                            <td>{{$puesto->nivelPuesto->nombre}}</td>
-                            <td>{{$puesto->nombre}}</td>
                             <td>{{$persona->apellido . ', ' . $persona->nombre}}</td>
                         </tr>
 
@@ -139,12 +138,84 @@
                             $i++;
                         @endphp
 
-                        @endforeach
                     @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+
+        @endif
+
+        @if ($puesto->funciones->count() > 0)
+
+        <div class="margin-arriba margin-abajo  ">
+            <div class="">
+
+                <table class="table">
+                    <thead class="thead-dark text-uppercase">
+                    <tr>
+                        <th>N°</th>
+                        <th>Funciones</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($puesto->funciones as $funcion)
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$funcion->nombre}}</td>
+                        </tr>
+
+                        @php
+                            $i++;
+                        @endphp
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @endif
+
+        @if ($puesto->obligaciones->count() > 0)
+        <div class="margin-arriba margin-abajo  ">
+            <div class="">
+
+                <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+                    <thead class="thead-dark text-uppercase">
+                    <tr>
+                        <th>N°</th>
+                        <th>Obligaciones</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($puesto->obligaciones as $obligacion)
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$obligacion->nombre}}</td>
+                        </tr>
+
+                        @php
+                            $i++;
+                        @endphp
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+
+
     </div>
 
 </body>

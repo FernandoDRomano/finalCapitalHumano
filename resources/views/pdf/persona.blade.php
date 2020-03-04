@@ -103,12 +103,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="titulo">Organización: {{$departamento->organizacion->nombre}}</h1>
+                <h1 class="titulo">Organización: {{$persona->organizacion->nombre}}</h1>
             </div>
         </div>
         <div class="row">
-            <h3 class="subTitulo">Departamento: {{$departamento->nombre}}</h3>
-            <h3 class="subTitulo">Nivel del Departamento: {{$departamento->nivelDepartamento->nombre}}</h3>
+            <h3 class="subTitulo">Nombre: {{$persona->apellido .', '. $persona->nombre}}</h3>
+            <h3 class="subTitulo">Fecha de Nacimiento: {{$persona->fechaNacimiento}}</h3>
+            <h3 class="subTitulo">DNI: {{$persona->dni}}</h3>
+            <h3 class="subTitulo">Domicilio: {{$persona->direccion}}</h3>
         </div>
         <div class="margin-abajo ">
             <div class="">
@@ -117,29 +119,25 @@
                     <thead class="thead-dark text-uppercase">
                     <tr>
                         <th>N°</th>
-                        <th>Nivel</th>
                         <th>Puesto de Trabajo</th>
-                        <th>Persona Asignada</th>
+                        <th>Departamento</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php
                         $i = 1;
                     @endphp
-                    @foreach ($departamento->puestos as $puesto)
-                        @foreach ($puesto->personas as $persona)
+                    @foreach ($persona->puestosDeTrabajos as $puesto)
                         <tr>
                             <td>{{$i}}</td>
-                            <td>{{$puesto->nivelPuesto->nombre}}</td>
-                            <td>{{$puesto->nombre}}</td>
-                            <td>{{$persona->apellido . ', ' . $persona->nombre}}</td>
+                            <td>{{$puesto->nombre}} ({{$puesto->nivelPuesto->nombre}})</td>
+                            <td>{{$puesto->departamento->nombre}}</td>
                         </tr>
 
                         @php
                             $i++;
                         @endphp
 
-                        @endforeach
                     @endforeach
                     </tbody>
                 </table>

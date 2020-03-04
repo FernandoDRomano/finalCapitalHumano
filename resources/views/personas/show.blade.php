@@ -63,6 +63,8 @@
                     data-tooltip="tooltip" data-placement="top" title="Eliminar la Asignación del Puesto de Trabajo" data-id="{{$puesto->id}}"><i class="fas fa-trash-alt" data-id="{{$puesto->id}}"></i></a>
                     <a name="btnVer" class="btn btn-success text-white" href="{{route('puestosDeTrabajos.show',['organizacion' => $organizacion->id, 'puesto' => $puesto->id])}}"
                     data-tooltip="tooltip" data-placement="top" title="Detalles del Puesto de Trabajo" role="button"><i class="fas fa-info-circle"></i></a>
+                    <a name="btnPDF" class="btn btn-outline-danger" href="{{action('PuestoTrabajoController@getPuestoReporte',['organizacion' => $organizacion->id, 'puesto' => $puesto->id])}}"
+                        data-tooltip="tooltip" data-placement="top" title="Generar Reporte PDF" role="button"><i class="fas fa-file-pdf"></i></a>
                 </td>
             </tr>
         @endforeach

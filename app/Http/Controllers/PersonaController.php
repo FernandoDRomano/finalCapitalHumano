@@ -10,6 +10,7 @@ use App\Organizacion;
 use App\PuestoDeTrabajo;
 use RealRashid\SweetAlert\Facades\Alert;
 use DateTime;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PersonaController extends Controller
 {
@@ -179,6 +180,15 @@ class PersonaController extends Controller
 
         //La retorno
         return response()->json($personasArray);
+    }
+
+
+    public function getPersonaReporte($organizacion_id, $persona_id){
+        $persona = Persona::findOrFail($persona_id);
+
+        $pdf = PDF::loadView('pdf.persona', compact('persona'));
+
+        return $pdf->download('reporte-persona.pdf');
     }
 
 }

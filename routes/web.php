@@ -24,6 +24,10 @@ Route::get('getDatosDependientes/{id}' , [
     'uses' => 'OrganizacionController@getDatosDependientes'
 ]);
 
+Route::get('organizacion/{organizacion}/getOrganizacionReporte', [
+    'uses' => 'OrganizacionController@getOrganizacionReporte'
+]);
+
 //GRUPO DE RUTAS PARA CRUD NIVELES DEPARTAMENTALES
 Route::resource('nivelesDepartamentales', 'NivelDepartamentoController');
 Route::get('getNivelDepartamental/{id}' , [
@@ -61,6 +65,10 @@ Route::post('organizacion/{organizacion}/personas/crear', [
 ]);
 Route::delete('organizacion/{organizacion}/personas/eliminar/{idPersona}', [
     'uses' => 'PersonaController@destroyDesdePuestoDeTrabajo'
+]);
+
+Route::get('organizacion/{organizacion}/getPersonaReporte/{persona}', [
+    'uses' => 'PersonaController@getPersonaReporte'
 ]);
 
 //GRUPO DE RUTAS PARA CRUD DEPARTAMENTOS
@@ -110,6 +118,10 @@ Route::delete('organizacion/{organizacion}/puestosDeTrabajos/eliminar/{id}', [
 ]);
 Route::put('organizacion/{organizacion}/puestosDeTrabajos/editar/{id}', [
     'uses' => 'PuestoTrabajoController@updateDesdeDepartamento'
+]);
+
+Route::get('organizacion/{organizacion}/getPuestoReporte/{puesto}', [
+    'uses' => 'PuestoTrabajoController@getPuestoReporte'
 ]);
 
 //GRUPO DE RUTAS PARA CRUD DE FUNCIONES

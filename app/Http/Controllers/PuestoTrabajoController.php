@@ -10,6 +10,7 @@ use App\Organizacion;
 use App\Http\Requests\SavePuestoTrabajoRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class PuestoTrabajoController extends Controller
@@ -222,6 +223,14 @@ class PuestoTrabajoController extends Controller
         $puestoDeTrabajo = PuestoDeTrabajo::findOrFail($puestoDeTrabajo_id);
         $funciones = $puestoDeTrabajo->funciones;
         return response()->json($funciones);
+    }
+
+    public function getPuestoReporte($organizacion_id, $puesto_id){
+        $puesto = PuestoDeTrabajo::findOrFail($puesto_id);
+
+        $pdf = PDF::loadView('pdf.puesto', compact('puesto'));
+
+        return $pdf->download('reporte-puesto.pdf');
     }
 
 }

@@ -59,7 +59,6 @@
             text-align: center;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 17px;
         }
 
         table tr {
@@ -92,6 +91,7 @@
         .margin-abajo{
             margin-bottom: 4rem;
         }
+
     </style>
 </head>
 <body>
@@ -101,15 +101,19 @@
     </header>
 
     <div class="container">
-        <div class="row">
+        <div class="">
             <div class="col-12">
-                <h1 class="titulo">Organización: {{$departamento->organizacion->nombre}}</h1>
+                <h1 class="titulo">Organización: {{$organizacion->nombre}}</h1>
             </div>
         </div>
-        <div class="row">
-            <h3 class="subTitulo">Departamento: {{$departamento->nombre}}</h3>
-            <h3 class="subTitulo">Nivel del Departamento: {{$departamento->nivelDepartamento->nombre}}</h3>
+        <div class="">
+            <h4 class="subTitulo">Departamentos: {{$organizacion->departamentos->count()}}</h4>
+            <h4 class="subTitulo">Puesto de Trabajos: {{$organizacion->puestosDeTrabajos->count()}}</h4>
+            <h4 class="subTitulo">Personas: {{$organizacion->personas->count()}}</h4>
         </div>
+
+        @if ($organizacion->departamentos->count() > 0)
+
         <div class="margin-abajo ">
             <div class="">
 
@@ -117,35 +121,110 @@
                     <thead class="thead-dark text-uppercase">
                     <tr>
                         <th>N°</th>
-                        <th>Nivel</th>
-                        <th>Puesto de Trabajo</th>
-                        <th>Persona Asignada</th>
+                        <th>Departamento</th>
+                        <th>Nivel del Departamento</th>
                     </tr>
                     </thead>
                     <tbody>
                     @php
                         $i = 1;
                     @endphp
-                    @foreach ($departamento->puestos as $puesto)
-                        @foreach ($puesto->personas as $persona)
+                    @foreach ($organizacion->departamentos()->orderBy('nombre', 'ASC')->get() as $departamento)
                         <tr>
                             <td>{{$i}}</td>
-                            <td>{{$puesto->nivelPuesto->nombre}}</td>
-                            <td>{{$puesto->nombre}}</td>
-                            <td>{{$persona->apellido . ', ' . $persona->nombre}}</td>
+                            <td>{{$departamento->nombre}}</td>
+                            <td>{{$departamento->nivelDepartamento->nombre }}</td>
                         </tr>
 
                         @php
                             $i++;
                         @endphp
 
-                        @endforeach
                     @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+
+        @endif
+
+        @if ($organizacion->puestosDeTrabajos->count() > 0)
+        <div class="margin-arriba margin-abajo ">
+            <div class="">
+
+                <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+                    <thead class="thead-dark text-uppercase">
+                    <tr>
+                        <th>N°</th>
+                        <th>Puesto de Trabajo</th>
+                        <th>Nivel del Puesto</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($organizacion->puestosDeTrabajos()->orderBy('nombre', 'ASC')->get() as $puesto)
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$puesto->nombre}}</td>
+                            <td>{{$puesto->nivelPuesto->nombre}}</td>
+                        </tr>
+
+                        @php
+                            $i++;
+                        @endphp
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+        @if ($organizacion->personas->count() > 0)
+
+        <div class="margin-arriba margin-abajo ">
+            <div class="">
+
+                <table class="table table-hover table-sm text-nowrap px-3 table-striped text-center">
+                    <thead class="thead-dark text-uppercase">
+                    <tr>
+                        <th>N°</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($organizacion->personas()->orderBy('apellido', 'ASC')->get() as $persona)
+                        <tr>
+                            <td>{{$i}}</td>
+                            <td>{{$persona->apellido . ', ' . $persona->nombre}}</td>
+                            <td>{{$persona->dni}}</td>
+                        </tr>
+
+                        @php
+                            $i++;
+                        @endphp
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @endif
+
+
+
     </div>
+
+    <footer>
+        <h1>Final de Gestión de Capital Humano</h1>
+    </footer>
 
 </body>
 </html>
