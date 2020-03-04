@@ -650,7 +650,7 @@
 
     function getPersonas(e){
             const id = e.target.getAttribute('data-id');
-            const url = `../getPersonas/${id}`;
+            const url = `../getPersonasAsignacion/${id}`;
             //LLAMADA A FETCH
             fetch(url, {
                 headers: {

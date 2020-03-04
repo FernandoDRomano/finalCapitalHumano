@@ -416,7 +416,8 @@ $eventSelectPuestoDeTrabajoAgregar.on("select2:select", getPersonas);
 
     function getPersonas(e){
         let id = e.target.value;
-        let url = "getPersonas/" + id;
+		console.log(e.target.value);
+        let url = "getPersonasAsignacion/" + id;
         fetch(url, {
             headers: {
                 "Content-Type": "application/json",

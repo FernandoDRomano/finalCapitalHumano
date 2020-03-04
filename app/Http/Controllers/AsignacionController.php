@@ -139,14 +139,15 @@ class AsignacionController extends Controller
         return response()->json($puestosDeTrabajos);
     }
 
-    public function getPersonas($organizacion_id, $puestoDeTrabajo_id){
+    public function getPersonasAsignacion($organizacion_id, $puestoDeTrabajo_id){
         //Busco la organizacion para obtener las personas
         $organizacion = Organizacion::findOrFail($organizacion_id);
+		
         //Obtengo el puesto de trabajo para identificar a las personas ocupadas en el mismo
         $puestoDetrabajo = PuestoDeTrabajo::findOrFail($puestoDeTrabajo_id);
         //Obtengo la persona que tiene ocupada en el puesto
         $personasOcupadas = $puestoDetrabajo->personas;
-        $personasOrganizacion = $organizacion->personas;
+        $personasOrganizacion = $organizacion->personas()->get();
         //Calculo la diferencia
         if($personasOcupadas != null){
             $personasLibres = $personasOrganizacion->diff($personasOcupadas);

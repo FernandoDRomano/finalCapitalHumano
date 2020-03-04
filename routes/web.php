@@ -173,8 +173,8 @@ Route::get('organizacion/{organizacion}/getPuestosDeTrabajos/{departamento}', [
 Route::get('organizacion/{organizacion}/getAsignacion/{asignacion}', [
     'uses' => 'AsignacionController@getAsignacion'
 ]);
-Route::get('organizacion/{organizacion}/getPersonas/{puestoDeTrabajo}', [
-    'uses' => 'AsignacionController@getPersonas'
+Route::get('organizacion/{organizacion}/getPersonasAsignacion/{puestoDeTrabajo}', [
+    'uses' => 'AsignacionController@getPersonasAsignacion'
 ]);
 
 Route::post('organizacion/{organizacion}/asignaciones/crear', [
